@@ -17,59 +17,81 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout2);
+        //setContentView(R.layout.layout2);
 
         //Variables for layout2
-        TextView textView1l2 = new TextView(this);
-        TextView textView2l2 = new TextView(this);
-        TextView textView3l2 = new TextView(this);
-        TextView textView4l2 = new TextView(this);
+        TextView textView1 = new TextView(this);
+        TextView textView2 = new TextView(this);
+        TextView textView3 = new TextView(this);
+        TextView textView4 = new TextView(this);
 
-        EditText editText1l2 = new EditText(this);
-        EditText editText2l2 = new EditText(this);
-        EditText editText3l2 = new EditText(this);
+        EditText editText1 = new EditText(this);
+        EditText editText2 = new EditText(this);
+        EditText editText3 = new EditText(this);
 
-        SeekBar seekBarl2 = new SeekBar(this);
+        SeekBar seekBar = new SeekBar(this);
+        LinearLayout.LayoutParams paramsLayoutSeekBar = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.WRAP_CONTENT);
+        paramsLayoutSeekBar.setMargins(0,30,0,0);
+        seekBar.setLayoutParams(paramsLayoutSeekBar);
 
-        textView1l2.setText("Namn");
-        textView1l2.setTextSize(20);
-        LinearLayout.LayoutParams params3l1 = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT);
-        params3l1.setMargins(0,15,0,0);
-        textView1l2.setLayoutParams(params3l1);
+        textView1.setText("Namn");
+        textView1.setTextSize(20);
+        LinearLayout.LayoutParams paramsNamn = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        paramsNamn.setMargins(0,35,0,0);
+        textView1.setLayoutParams(paramsNamn);
 
-        textView2l2.setText("Lösenord");
-        textView2l2.setTextSize(20);
+        textView2.setText("Lösenord");
+        textView2.setTextSize(20);
+        LinearLayout.LayoutParams paramsPassword = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        paramsPassword.setMargins(0,40,0,0);
+        textView2.setLayoutParams(paramsPassword);
 
-        textView3l2.setText("Email");
-        textView3l2.setTextSize(20);
+        textView3.setText("Email");
+        textView3.setTextSize(20);
+        LinearLayout.LayoutParams paramsEmail = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.WRAP_CONTENT);
+        paramsEmail.setMargins(0,40,0,0);
+        textView3.setLayoutParams(paramsEmail);
 
-        textView4l2.setText("Ålder");
-        textView4l2.setTextSize(20);
+        textView4.setText("Ålder");
+        textView4.setTextSize(20);
+        LinearLayout.LayoutParams paramsAge = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.WRAP_CONTENT);
+        paramsAge.setMargins(0,40,0,0);
+        textView4.setLayoutParams(paramsAge);
 
-        LinearLayout linearLayout1l2 = new LinearLayout(this);
-        linearLayout1l2.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout linearLayout1 = new LinearLayout(this);
+        linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
 
-        LinearLayout linearLayout2l2 = new LinearLayout(this);
-        linearLayout2l2.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout linearLayout2 = new LinearLayout(this);
+        linearLayout2.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams paramsLayout2l2 = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT, 0.6f);
+        linearLayout2.setLayoutParams(paramsLayout2l2);
 
-        linearLayout2l2.addView(textView1l2);
-        linearLayout2l2.addView(textView2l2);
-        linearLayout2l2.addView(textView3l2);
-        linearLayout2l2.addView(textView4l2);
+        linearLayout2.addView(textView1);
+        linearLayout2.addView(textView2);
+        linearLayout2.addView(textView3);
+        linearLayout2.addView(textView4);
 
-        LinearLayout linearLayout3l2 = new LinearLayout(this);
-        linearLayout3l2.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout linearLayout3 = new LinearLayout(this);
+        linearLayout3.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams paramsLayout3l2 = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.MATCH_PARENT, 0.2f);
+        linearLayout3.setLayoutParams(paramsLayout3l2);
 
-        linearLayout3l2.addView(editText1l2);
-        linearLayout3l2.addView(editText2l2);
-        linearLayout3l2.addView(editText3l2);
-        linearLayout3l2.addView(seekBarl2);
+        linearLayout3.addView(editText1);
+        linearLayout3.addView(editText2);
+        linearLayout3.addView(editText3);
+        linearLayout3.addView(seekBar);
 
-        linearLayout1l2.addView(linearLayout2l2);
-        linearLayout1l2.addView(linearLayout3l2);
+        linearLayout1.addView(linearLayout2);
+        linearLayout1.addView(linearLayout3);
 
-        //setContentView(linearLayout1l2);
+        setContentView(linearLayout1);
 
 
 
