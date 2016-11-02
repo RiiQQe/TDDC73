@@ -43,4 +43,7 @@ app/app.iml
 
 captures/
 
-
+# Vim 
+*~ 
+*.swp 
+*.swo
