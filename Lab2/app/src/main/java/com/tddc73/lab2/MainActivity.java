@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         editText.addTextChangedListener(new TextWatcher() {
             String text;
             List<Integer> posList;
+            int oldPos = -1;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -69,14 +70,22 @@ public class MainActivity extends AppCompatActivity {
                 text = editText.getText().toString();
                 posList = listAdapter.getPositions(text);
 
+
+
                 if(posList.size() == 1){
+                    collapseAllGroups();
                     elv.expandGroup(posList.get(0));
+                    oldPos = posList.get(0);
                 } else if ( posList.size() == 2){
+                    collapseAllGroups();
                     elv.expandGroup(posList.get(0));
+                    oldPos = posList.get(0);
                     int index = elv.getFlatListPosition(ExpandableListView.
                             getPackedPositionForChild(posList.get(0), posList.get(1)));
                     elv.setItemChecked(index, true);
+                    oldPos = posList.get(0);
                 }
+
 
             }
 
@@ -87,10 +96,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void collapseAllGroups(){
+        for(int i = 0; i < listHeader.size(); i++){
+            elv.collapseGroup(i);
+        }
+    }
+
     private void populate() {
         listHeader.add("light");
-        listHeader.add("Medium");
-        listHeader.add("Dark");
+        listHeader.add("medium");
+        listHeader.add("dark");
 
         List<String> light = new ArrayList<String>();
         light.add("yellow");
