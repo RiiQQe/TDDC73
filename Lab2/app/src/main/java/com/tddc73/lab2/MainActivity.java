@@ -58,9 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         editText.addTextChangedListener(new TextWatcher() {
             String text;
-            int posGroup;
-            int posChild;
-            int oldPos = -2;
             List<Integer> posList;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
