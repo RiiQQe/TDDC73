@@ -13,11 +13,13 @@
     <EditText
         android:id="@+id/serchtext"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="Skriv textjäveln här"/>
 
     <ExpandableListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ExpandableListView>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/serchtext"></ExpandableListView>
 
 </RelativeLayout>
