@@ -78,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
                     elv.setItemChecked(index, true);
                 }
 
+                // Set background color of input field
+                if (posList.size() > 0 || text.length() == 0) {
+                    editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
+                } else {
+                    editText.setBackgroundColor(getResources().getColor(R.color.red));
+                }
             }
 
             @Override
