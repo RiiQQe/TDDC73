@@ -4,6 +4,8 @@ import android.app.ExpandableListActivity;
 import android.database.DataSetObserver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +41,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
                 return false;
+            }
+        });
+
+        editText.addTextChangedListener(new TextWatcher() {
+            String text;
+            int posGroup;
+            int posChild;
+            int oldPos = -2;
+            List<Integer> posList;
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                text = editText.getText().toString();
+                posList = listAdapter.getPositions(text);
+
+                if(posList.size() == 1){
+                    elv.expandGroup(posList.get(0));
+                } else if ( posList.size() == 2){
+                    elv.expandGroup(posList.get(0));
+                    int index = elv.getFlatListPosition(ExpandableListView.
+                            getPackedPositionForChild(posList.get(0), posList.get(1)));
+                    elv.setItemChecked(index, true);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }

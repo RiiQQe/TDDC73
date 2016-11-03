@@ -1,6 +1,7 @@
 package com.tddc73.lab2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +37,29 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     public Object getChild(int groupPosition, int childPosititon) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
                 .get(childPosititon);
+    }
+
+    public List<Integer> getPositions(String text) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int pos = -1;
+
+        pos = this._listDataHeader.indexOf(text);
+        if ( pos != -1){
+            list.add(pos);
+        } else {
+            for(int i = 0; i < this._listDataHeader.size(); i++){
+                String s = this._listDataHeader.get(i);
+                List<String> tempList = this._listDataChild.get(s);
+                int tempPos = tempList.indexOf(text);
+                if(tempPos != -1){
+                    list.add(i);
+                    list.add(tempPos);
+                }
+            }
+        }
+
+
+        return list;
     }
 
     @Override
@@ -70,6 +95,17 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getGroup(int groupPosition) {
         return this._listDataHeader.get(groupPosition);
+    }
+
+    public int getGroupPosition(String group) {
+        int pos = -1;
+
+        for(int i=0; i<this._listDataHeader.size(); i++) {
+            if(group.toLowerCase().equals(this._listDataHeader.get(i).toString().toLowerCase()))
+                pos = i;
+        }
+
+        return pos;
     }
 
     @Override
@@ -109,4 +145,6 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
 }
