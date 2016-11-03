@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         ExpandableListAdapter ela = new ExpandableListAdapter() {
             @Override
             public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-
             }
 
             @Override
