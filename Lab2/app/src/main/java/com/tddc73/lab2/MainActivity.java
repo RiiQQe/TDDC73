@@ -32,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         listAdapter = new MyExpandableListAdapter(this, listHeader, listData);
 
         elv.setAdapter(listAdapter);
+        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                return false;
+            }
+        });
     }
 
     private void populate() {
