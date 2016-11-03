@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         listAdapter = new MyExpandableListAdapter(this, listHeader, listData);
 
         elv.setAdapter(listAdapter);
-
     }
 
     private void populate() {
