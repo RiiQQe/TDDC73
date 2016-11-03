@@ -2,6 +2,7 @@ package com.tddc73.lab2;
 
 import android.app.ExpandableListActivity;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,9 +36,20 @@ public class MainActivity extends AppCompatActivity {
         listAdapter = new MyExpandableListAdapter(this, listHeader, listData);
 
         elv.setAdapter(listAdapter);
+
         elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                // Change color on pressed item
+                int index = expandableListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(i, i1));
+                expandableListView.setItemChecked(index, true);
+
+                // Get path of selected item
+                // and set text field to path
+                String child = listAdapter.getChild(i, i1).toString();
+                String parent = listAdapter.getGroup(i).toString();
+                String path = parent + "/" + child;
+                editText.setText(path);
                 return false;
             }
         });
