@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     MyExpandableListAdapter listAdapter;
     List<String> listHeader = new ArrayList<String>();
     HashMap<String, List<String>> listData = new HashMap<String, List<String>>();
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         elv = (ExpandableListView) findViewById(R.id.list);
+        editText = (EditText) findViewById(R.id.serchtext);
 
         populate();
 
