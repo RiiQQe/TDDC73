@@ -147,4 +147,19 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
 
+    public boolean getColor(String text) {
+        for (int i = 0; i < _listDataHeader.size(); i++) {
+            String temp = _listDataHeader.get(i);
+            if (temp.startsWith(text)) return true;
+            else {
+                List<String> tempList = _listDataChild.get(temp);
+                for (int j = 0; j < tempList.size(); j++) {
+                    String tempStr = tempList.get(j);
+                    if (tempStr.startsWith(text)) return true;
+                }
+            }
+        }
+        return false;
+
+    }
 }

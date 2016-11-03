@@ -69,21 +69,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 text = editText.getText().toString();
+
+
+                // Possible yo use full path
+                if (text.contains("/")) {
+                    String[] kalle = text.split("/");
+                    if (kalle.length > 1)
+                        text = kalle[1];
+                    else text = kalle[0];
+                }
+
                 posList = listAdapter.getPositions(text);
+                Boolean color = listAdapter.getColor(text);
 
                 if(posList.size() == 1){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
-                    oldPos = posList.get(0);
                 } else if ( posList.size() == 2){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
-                    oldPos = posList.get(0);
                     index = elv.getFlatListPosition(ExpandableListView.
                             getPackedPositionForChild(posList.get(0), posList.get(1)));
                     elv.setItemChecked(index, true);
-                    oldPos = posList.get(0);
                 }
+                // Set background color of input field
+                if (posList.size() > 0 || text.length() == 0 || color) {
+                    editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
+                } else {
+                    editText.setBackgroundColor(getResources().getColor(R.color.red));
+                }
+
             }
 
             @Override
@@ -111,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> medium = new ArrayList<String>();
         medium.add("white");
         medium.add("gray");
+        medium.add("yellow2");
 
         List<String> dark = new ArrayList<String>();
         dark.add("black");
