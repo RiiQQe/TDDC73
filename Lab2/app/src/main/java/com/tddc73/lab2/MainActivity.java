@@ -74,9 +74,11 @@ public class MainActivity extends AppCompatActivity {
                     String[] kalle = text.split("/");
                     if (kalle.length > 1)
                         text = kalle[1];
+                    else text = kalle[0];
                 }
 
                 posList = listAdapter.getPositions(text);
+                Boolean color = listAdapter.getColor(text);
 
                 if(posList.size() == 1){
                     collapseAllGroups();
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Set background color of input field
-                if (posList.size() > 0 || text.length() == 0) {
+                if (posList.size() > 0 || text.length() == 0 || color) {
                     editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
