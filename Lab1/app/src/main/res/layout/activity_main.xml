@@ -64,8 +64,9 @@
 
     <ImageView
         android:id="@+id/liulogo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/checkboxes2"
         android:src="@drawable/liulogo"/>
 
