@@ -1,9 +1,12 @@
 package com.tddc73.lab1;
 
+import android.renderscript.Type;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -26,8 +29,11 @@ public class MainActivity extends AppCompatActivity {
         TextView textView4 = new TextView(this);
 
         EditText editText1 = new EditText(this);
+        editText1.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         EditText editText2 = new EditText(this);
+        editText2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         EditText editText3 = new EditText(this);
+        editText3.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
         SeekBar seekBar = new SeekBar(this);
         LinearLayout.LayoutParams paramsLayoutSeekBar = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
