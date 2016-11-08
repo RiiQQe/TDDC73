@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout linearLayout2 = new LinearLayout(this);
         linearLayout2.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams paramsLayout2l2 = new LinearLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT, 0.6f);
+                ActionBar.LayoutParams.MATCH_PARENT, 0.4f);
         linearLayout2.setLayoutParams(paramsLayout2l2);
 
         linearLayout2.addView(textView1);
