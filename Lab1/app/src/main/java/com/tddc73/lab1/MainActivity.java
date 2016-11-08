@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         myButtonl1.setLayoutParams(paramsl1);
 
         EditText myEditTextl1 = new EditText(this);
+        myEditTextl1.setSingleLine(true);
         myEditTextl1.setLayoutParams(paramsl1);
 
         RatingBar myRatingBarl1 = new RatingBar(this);
@@ -57,12 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Run with different layouts
         // EX 1 PROGRAMMICALLY
-        //setContentView(layout1);
+        setContentView(layout1);
 
         // EX 1 XML
         //setContentView(R.layout.layout1);
-
-
     }
 
 
