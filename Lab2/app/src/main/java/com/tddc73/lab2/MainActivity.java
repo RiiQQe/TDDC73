@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             String text;
             List<Integer> posList;
             int oldPos = -1;
-            int index = 0;
+            int index = -1;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                     editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
+                    if(index != -1)
+                        elv.setItemChecked(index, false);
                 }
 
             }
