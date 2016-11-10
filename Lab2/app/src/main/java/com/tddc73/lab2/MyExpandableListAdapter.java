@@ -27,6 +27,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private HashMap<String, List<String>> _listDataChild;
 
+
     public MyExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<String>> listChildData) {
         this._context = context;
@@ -34,12 +35,16 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         this._listDataChild = listChildData;
     }
 
+    //Returns child given the specific position.
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
                 .get(childPosititon);
     }
 
+    //Returns a list with positions. index one of text is the parent node, index two is the child.
+    //Returns empty list if no parent is found. Returns list of size=1 if parent is found, size=2
+    // if a child is found.
     public List<Integer> getPositions(String[] text) {
         ArrayList<Integer> list = new ArrayList<>();
         int pos;
@@ -71,6 +76,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         final String childText = (String) getChild(groupPosition, childPosition);
 
+        //Inflates the requested layout
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -79,7 +85,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.lblListItem);
-
+        //Sets child text.
         txtListChild.setText(childText);
         return convertView;
     }
@@ -93,17 +99,6 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getGroup(int groupPosition) {
         return this._listDataHeader.get(groupPosition);
-    }
-
-    public int getGroupPosition(String group) {
-        int pos = -1;
-
-        for(int i=0; i<this._listDataHeader.size(); i++) {
-            if(group.toLowerCase().equals(this._listDataHeader.get(i).toString().toLowerCase()))
-                pos = i;
-        }
-
-        return pos;
     }
 
     @Override
@@ -120,12 +115,14 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
+        //Inflates the requested layout.
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
 
+        //Sets title and typeface.
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
@@ -167,7 +164,6 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }
 
-        // This could be done more dynamic..
         if (text.length > 2 && parentExists && childExists) {
             return true;
         }
