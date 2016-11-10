@@ -24,9 +24,7 @@ public class MainActivity extends AppCompatActivity {
     List<String> listHeader = new ArrayList<String>();
     HashMap<String, List<String>> listData = new HashMap<String, List<String>>();
     EditText editText;
-
-    //TODO: REMOVE MARKING ON RED INPUTFIELD
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TextChangeListener for the editText
         editText.addTextChangedListener(new TextWatcher() {
-            String text;
-            List<Integer> posList;
-            int index = -1;
+            int prevIndex = -1;
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -76,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 List<Integer> posList = null;
-                int index = 0;
                 String text = editText.getText().toString();
                 String[] textArr = new String[]{};
                 
@@ -98,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (posList != null && posList.size() == 2){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
-                    index = elv.getFlatListPosition(ExpandableListView.
+                    prevIndex = elv.getFlatListPosition(ExpandableListView.
                             getPackedPositionForChild(posList.get(0), posList.get(1)));
-                    elv.setItemChecked(index, true);
+                    elv.setItemChecked(prevIndex, true);
                 }
 
                 // Set background color of input field
@@ -110,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
                     //Uncheck last checked item if background is red
 
-                    if(index != -1)
-                        elv.setItemChecked(index, false);
+                    if(prevIndex != -1)
+                        elv.setItemChecked(prevIndex, false);
                 }
 
 
