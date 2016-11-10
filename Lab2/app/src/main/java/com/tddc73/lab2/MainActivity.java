@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
+                    if(index != -1)
+                        elv.setItemChecked(index, false);
                 }
 
 
