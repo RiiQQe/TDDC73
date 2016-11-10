@@ -42,24 +42,21 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
     public List<Integer> getPositions(String[] text) {
         ArrayList<Integer> list = new ArrayList<>();
-        int pos = -1;
+        int pos;
 
-        pos = this._listDataHeader.indexOf(text[0]);
+        pos = this._listDataHeader.indexOf(text[1]);
         if (pos != -1){
             list.add(pos);
         }
-        for(int i = 0; i < this._listDataHeader.size(); i++){
-            String s = this._listDataHeader.get(i);
+        if(text.length > 2) {
+            String s = this._listDataHeader.get(pos);
             List<String> tempList = this._listDataChild.get(s);
-            int tempPos = tempList.indexOf(text[1]);
-            if(tempPos != -1){
-                list.add(i);
+            int tempPos = tempList.indexOf(text[2]);
+
+            if (tempPos != -1) {
                 list.add(tempPos);
             }
         }
-
-
-
         return list;
     }
 

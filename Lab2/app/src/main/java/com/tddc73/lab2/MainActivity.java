@@ -33,12 +33,16 @@ public class MainActivity extends AppCompatActivity {
         elv = (ExpandableListView) findViewById(R.id.list);
         editText = (EditText) findViewById(R.id.serchtext);
 
+        //Adds values to listData
         populate();
 
+        //Creates a new adapter with listHeader and listData
         listAdapter = new MyExpandableListAdapter(this, listHeader, listData);
 
+        //Sets the elv adapter
         elv.setAdapter(listAdapter);
 
+        //OnClickListener for the expandable listview
         elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
@@ -56,7 +60,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //TextChangeListener for the editText
         editText.addTextChangedListener(new TextWatcher() {
+            String text;
+            List<Integer> posList;
+            int index = -1;
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -68,13 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 int index = 0;
                 String text = editText.getText().toString();
                 String[] textArr = new String[]{};
-
-                // EX: /medium/yellow
-
+                
                 // Possible yo use full path
                 if (text.contains("/")) {
                     textArr = text.split("/");
                 }
+
 
                 Boolean color = false;
                 if (textArr.length > 0) {
@@ -98,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
+                    //Uncheck last checked item if background is red
                     if(index != -1)
                         elv.setItemChecked(index, false);
                 }
