@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     HashMap<String, List<String>> listData = new HashMap<String, List<String>>();
     EditText editText;
 
+    //TODO: REMOVE MARKING ON RED INPUTFIELD
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
                     //Uncheck last checked item if background is red
+
                     if(index != -1)
                         elv.setItemChecked(index, false);
                 }
