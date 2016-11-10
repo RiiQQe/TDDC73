@@ -2,6 +2,5 @@
 <resources>
         <declare-styleable name="InteractiveSearcher">
             <attr name="hint" format="string" />
-
         </declare-styleable>
 </resources>
