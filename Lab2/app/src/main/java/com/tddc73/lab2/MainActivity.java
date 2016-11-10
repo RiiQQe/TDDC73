@@ -33,12 +33,16 @@ public class MainActivity extends AppCompatActivity {
         elv = (ExpandableListView) findViewById(R.id.list);
         editText = (EditText) findViewById(R.id.serchtext);
 
+        //Adds values to listData
         populate();
 
+        //Creates a new adapter with listHeader and listData
         listAdapter = new MyExpandableListAdapter(this, listHeader, listData);
 
+        //Sets the elv adapter
         elv.setAdapter(listAdapter);
 
+        //OnClickListener for the expandable listview
         elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
@@ -56,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //TextChangeListener for the editText
         editText.addTextChangedListener(new TextWatcher() {
             String text;
             List<Integer> posList;
-            int oldPos = -1;
             int index = -1;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -79,13 +83,17 @@ public class MainActivity extends AppCompatActivity {
                     else text = kalle[0];
                 }
 
+                //Returns positions for
                 posList = listAdapter.getPositions(text);
                 Boolean color = listAdapter.getColor(text);
 
+                //If posList only contains 1 value, it corresponds to the top layer nodes.
+                //Expands the group searched for in the editText.
                 if(posList.size() == 1){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
-                } else if ( posList.size() == 2){
+                }
+                else if ( posList.size() == 2){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
                     index = elv.getFlatListPosition(ExpandableListView.
@@ -97,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
+                    //Uncheck last checked item if background is red
                     if(index != -1)
                         elv.setItemChecked(index, false);
                 }

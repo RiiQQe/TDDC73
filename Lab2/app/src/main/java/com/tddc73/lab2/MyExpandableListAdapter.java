@@ -43,6 +43,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         ArrayList<Integer> list = new ArrayList<>();
         int pos = -1;
 
+        
+
         pos = this._listDataHeader.indexOf(text);
         if ( pos != -1){
             list.add(pos);
