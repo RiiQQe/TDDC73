@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Set background color of input field
-                if ((posList != null && posList.size() > 0) || text.length() == 0 || (text.startsWith("/") && text.length()== 1) || color) {
+                if (((text.startsWith("/") && text.length() == 1) || text.length() == 0) || color) {
                     editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));

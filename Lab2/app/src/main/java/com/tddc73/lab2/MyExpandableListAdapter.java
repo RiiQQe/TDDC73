@@ -3,6 +3,7 @@ package com.tddc73.lab2;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,17 +149,35 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
 
     public boolean getColor(String[] text) {
+
+        Boolean parentExists = false;
+        Boolean childExists = false;
+
+        // See if parent exists
+        String parentString = null;
         for (int i = 0; i < _listDataHeader.size(); i++) {
             String temp = _listDataHeader.get(i);
-            if (temp.startsWith(text[0])) return true;
-            else {
-                List<String> tempList = _listDataChild.get(temp);
-                for (int j = 0; j < tempList.size(); j++) {
-                    String tempStr = tempList.get(j);
-                    if (tempStr.startsWith(text[1])) return true;
-                }
+            if (temp.startsWith(text[1])) {
+                parentExists = true;
+                parentString = temp;
             }
         }
+        if (text.length > 2 && parentString != null) {
+            List<String> tempList = _listDataChild.get(parentString);
+            for (int j = 0; j < tempList.size(); j++) {
+                String tempStr = tempList.get(j);
+                if (tempStr.startsWith(text[2])) childExists = true;
+            }
+        }
+
+        // This could be done more dynamic..
+        if (text.length > 2 && parentExists && childExists) {
+            return true;
+        }
+        else if (text.length == 2 && parentExists) {
+            return true;
+        }
+
         return false;
 
     }
