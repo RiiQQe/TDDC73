@@ -3,6 +3,7 @@ package com.tddc73.lab2;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,28 +40,23 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                 .get(childPosititon);
     }
 
-    public List<Integer> getPositions(String text) {
+    public List<Integer> getPositions(String[] text) {
         ArrayList<Integer> list = new ArrayList<>();
-        int pos = -1;
+        int pos;
 
-        
-
-        pos = this._listDataHeader.indexOf(text);
-        if ( pos != -1){
+        pos = this._listDataHeader.indexOf(text[1]);
+        if (pos != -1){
             list.add(pos);
-        } else {
-            for(int i = 0; i < this._listDataHeader.size(); i++){
-                String s = this._listDataHeader.get(i);
-                List<String> tempList = this._listDataChild.get(s);
-                int tempPos = tempList.indexOf(text);
-                if(tempPos != -1){
-                    list.add(i);
-                    list.add(tempPos);
-                }
+        }
+        if(text.length > 2) {
+            String s = this._listDataHeader.get(pos);
+            List<String> tempList = this._listDataChild.get(s);
+            int tempPos = tempList.indexOf(text[2]);
+
+            if (tempPos != -1) {
+                list.add(tempPos);
             }
         }
-
-
         return list;
     }
 
@@ -149,15 +145,15 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
 
-    public boolean getColor(String text) {
+    public boolean getColor(String[] text) {
         for (int i = 0; i < _listDataHeader.size(); i++) {
             String temp = _listDataHeader.get(i);
-            if (temp.startsWith(text)) return true;
+            if (temp.startsWith(text[0])) return true;
             else {
                 List<String> tempList = _listDataChild.get(temp);
                 for (int j = 0; j < tempList.size(); j++) {
                     String tempStr = tempList.get(j);
-                    if (tempStr.startsWith(text)) return true;
+                    if (tempStr.startsWith(text[1])) return true;
                 }
             }
         }

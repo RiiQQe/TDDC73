@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             String text;
             List<Integer> posList;
             int index = -1;
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -72,36 +73,36 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                text = editText.getText().toString();
-
-
+                List<Integer> posList = null;
+                int index = 0;
+                String text = editText.getText().toString();
+                String[] textArr = new String[]{};
+                
                 // Possible yo use full path
                 if (text.contains("/")) {
-                    String[] kalle = text.split("/");
-                    if (kalle.length > 1)
-                        text = kalle[1];
-                    else text = kalle[0];
+                    textArr = text.split("/");
                 }
 
-                //Returns positions for
-                posList = listAdapter.getPositions(text);
-                Boolean color = listAdapter.getColor(text);
 
-                //If posList only contains 1 value, it corresponds to the top layer nodes.
-                //Expands the group searched for in the editText.
-                if(posList.size() == 1){
+                Boolean color = false;
+                if (textArr.length > 0) {
+                    posList = listAdapter.getPositions(textArr);
+                    color = listAdapter.getColor(textArr);
+                }
+
+                if(posList != null && posList.size() == 1){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
-                }
-                else if ( posList.size() == 2){
+                } else if (posList != null && posList.size() == 2){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
                     index = elv.getFlatListPosition(ExpandableListView.
                             getPackedPositionForChild(posList.get(0), posList.get(1)));
                     elv.setItemChecked(index, true);
                 }
+
                 // Set background color of input field
-                if (posList.size() > 0 || text.length() == 0 || color) {
+                if ((posList != null && posList.size() > 0) || text.length() == 0 || (text.startsWith("/") && text.length()== 1) || color) {
                     editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     if(index != -1)
                         elv.setItemChecked(index, false);
                 }
+
 
             }
 
