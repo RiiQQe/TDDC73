@@ -57,10 +57,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         editText.addTextChangedListener(new TextWatcher() {
-            String text;
-            List<Integer> posList;
-            int oldPos = -1;
-            int index = 0;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -68,36 +64,42 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                text = editText.getText().toString();
+                List<Integer> posList = null;
+                int index = 0;
+                String text = editText.getText().toString();
+                String[] textArr = new String[]{};
 
+                // EX: /medium/yellow
 
                 // Possible yo use full path
                 if (text.contains("/")) {
-                    String[] kalle = text.split("/");
-                    if (kalle.length > 1)
-                        text = kalle[1];
-                    else text = kalle[0];
+                    textArr = text.split("/");
                 }
 
-                posList = listAdapter.getPositions(text);
-                Boolean color = listAdapter.getColor(text);
+                Boolean color = false;
+                if (textArr.length > 0) {
+                    posList = listAdapter.getPositions(textArr);
+                    color = listAdapter.getColor(textArr);
+                }
 
-                if(posList.size() == 1){
+                if(posList != null && posList.size() == 1){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
-                } else if ( posList.size() == 2){
+                } else if (posList != null && posList.size() == 2){
                     collapseAllGroups();
                     elv.expandGroup(posList.get(0));
                     index = elv.getFlatListPosition(ExpandableListView.
                             getPackedPositionForChild(posList.get(0), posList.get(1)));
                     elv.setItemChecked(index, true);
                 }
+
                 // Set background color of input field
-                if (posList.size() > 0 || text.length() == 0 || color) {
+                if ((posList != null && posList.size() > 0) || text.length() == 0 || (text.startsWith("/") && text.length()== 1) || color) {
                     editText.setBackgroundColor(getResources().getColor(R.color.inputStandard));
                 } else {
                     editText.setBackgroundColor(getResources().getColor(R.color.red));
                 }
+
 
             }
 
