@@ -14,7 +14,7 @@
     tools:showIn="@layout/activity_main">
 
     <com.example.micke.lab3.InteractiveSearcher
-        android:id="@+id/timeView"
+        android:id="@+id/interactiveSearcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Sök för fan"/>
