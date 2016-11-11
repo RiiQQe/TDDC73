@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     List<String> listHeader = new ArrayList<String>();
     HashMap<String, List<String>> listData = new HashMap<String, List<String>>();
     EditText editText;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 // and set text field to path
                 String child = listAdapter.getChild(i, i1).toString();
                 String parent = listAdapter.getGroup(i).toString();
-                String path = parent + "/" + child;
+                String path = "/" + parent + "/" + child;
                 editText.setText(path);
                 return false;
             }
@@ -74,17 +74,24 @@ public class MainActivity extends AppCompatActivity {
                 List<Integer> posList = null;
                 String text = editText.getText().toString();
                 String[] textArr = new String[]{};
-                
+                List<String> textList = new ArrayList<String>();
+
+                text = text.replaceAll("\\s+", "").toLowerCase();
+
                 // Possible yo use full path
                 if (text.contains("/")) {
                     textArr = text.split("/");
+                    for (int j = 0; j < textArr.length; j++) {
+                        textList.add(textArr[j]);
+                    }
+                    textList.remove("");
                 }
 
 
                 Boolean color = false;
-                if (textArr.length > 0) {
-                    posList = listAdapter.getPositions(textArr);
-                    color = listAdapter.getColor(textArr);
+                if (textList.size() > 0) {
+                    posList = listAdapter.getPositions(textList);
+                    color = listAdapter.getColor(textList);
                 }
 
                 if(posList != null && posList.size() == 1){

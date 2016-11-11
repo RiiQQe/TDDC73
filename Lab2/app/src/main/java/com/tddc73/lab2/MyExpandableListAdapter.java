@@ -40,18 +40,18 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                 .get(childPosititon);
     }
 
-    public List<Integer> getPositions(String[] text) {
+    public List<Integer> getPositions(List<String> text) {
         ArrayList<Integer> list = new ArrayList<>();
         int pos;
 
-        pos = this._listDataHeader.indexOf(text[1]);
+        pos = this._listDataHeader.indexOf(text.get(0));
         if (pos != -1){
             list.add(pos);
         }
-        if(text.length > 2) {
+        if(text.size() > 1) {
             String s = this._listDataHeader.get(pos);
             List<String> tempList = this._listDataChild.get(s);
-            int tempPos = tempList.indexOf(text[2]);
+            int tempPos = tempList.indexOf(text.get(1));
 
             if (tempPos != -1) {
                 list.add(tempPos);
@@ -145,7 +145,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
 
-    public boolean getColor(String[] text) {
+    public boolean getColor(List<String> text) {
 
         Boolean parentExists = false;
         Boolean childExists = false;
@@ -154,24 +154,24 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         String parentString = null;
         for (int i = 0; i < _listDataHeader.size(); i++) {
             String temp = _listDataHeader.get(i);
-            if (temp.startsWith(text[1])) {
+            if (temp.startsWith(text.get(0))) {
                 parentExists = true;
                 parentString = temp;
             }
         }
-        if (text.length > 2 && parentString != null) {
+        if (text.size() > 1 && parentString != null) {
             List<String> tempList = _listDataChild.get(parentString);
             for (int j = 0; j < tempList.size(); j++) {
                 String tempStr = tempList.get(j);
-                if (tempStr.startsWith(text[2])) childExists = true;
+                if (tempStr.startsWith(text.get(1))) childExists = true;
             }
         }
 
         // This could be done more dynamic..
-        if (text.length > 2 && parentExists && childExists) {
+        if (text.size() > 1 && parentExists && childExists) {
             return true;
         }
-        else if (text.length == 2 && parentExists) {
+        else if (text.size() == 1 && parentExists) {
             return true;
         }
 
