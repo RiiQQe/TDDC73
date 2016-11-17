@@ -14,6 +14,8 @@ public class CustomListView extends View {
 
     Paint backgroundPaint, textPaint, linePaint;
 
+    int nrOfResults;
+
     String[] mData;
 
     public CustomListView(Context context, AttributeSet attrs) {
@@ -26,7 +28,8 @@ public class CustomListView extends View {
 
         // TODO: Add nr of searchResults
         try {
-            boolean mShowText = a.getBoolean(R.styleable.CustomListView_showText, false);
+            //boolean mShowText = a.getBoolean(R.styleable.CustomListView_showText, false);
+            nrOfResults = a.getInt(R.styleable.CustomListView_nrOfResults, 5);
         } finally {
             a.recycle();
         }
@@ -50,7 +53,11 @@ public class CustomListView extends View {
         int itemHeight = 100;
         float width = 1000.0f;
 
-        for (int i = 0; i < mData.length; i++) {
+        int sizeOfDropdown = mData.length;
+
+        if (mData.length > nrOfResults) sizeOfDropdown = nrOfResults;
+
+        for (int i = 0; i < sizeOfDropdown; i++) {
             String text = mData[i];
             float height = i * itemHeight;
             canvas.drawRect(0, height, width, height + itemHeight, backgroundPaint);
@@ -58,6 +65,11 @@ public class CustomListView extends View {
             if (i > 0)
                 canvas.drawLine(10.0f, height, width, height, linePaint);
         }
+    }
+
+    public void updateNrOfResults(int k) {
+        nrOfResults = k;
+        invalidate();
     }
 
     public void populate(String [] tempArr) {
