@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +20,12 @@ import java.net.URL;
  */
 
 public class SearchOperation extends AsyncTask<String, Void, String> {
+
+    private SearchOperationInterface mListener;
+
+    public SearchOperation(SearchOperationInterface mListener) {
+        this.mListener  = mListener;
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -34,13 +43,11 @@ public class SearchOperation extends AsyncTask<String, Void, String> {
             urlConnection = (HttpURLConnection) url.openConnection();
             in = new BufferedInputStream(urlConnection.getInputStream());
 
-            //JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-
             while((bytesRead = in.read(contents)) != -1) {
                 strFileContents += new String(contents, 0, bytesRead);
             }
-
             in.close();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -55,9 +62,19 @@ public class SearchOperation extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+        JSONObject jsonObject = null;
 
-        Log.d("TAG", "Response: " + result);
-        //Possible to use UI components here, populate the list view here
+        try {
+            jsonObject = new JSONObject(result);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (mListener != null) {
+            //Log.d("TAG", String.valueOf(jsonObject));
+            mListener.putResults(jsonObject);
+        }
     }
 
     @Override

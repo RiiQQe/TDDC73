@@ -1,8 +1,11 @@
 package com.example.micke.lab3;
 
-import android.content.DialogInterface;
+
 import android.os.Bundle;
+
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -13,18 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-
-    String[] tempArr = {"kalle", "kaka", "kul", "a", "b", "c", "d", "e", "f", "g", "h", "i", "a", "b", "c", "d", "e", "f", "g", "h", "i"};
-    String[] tempArr2 = {"NYA STRANGAR", "KALLE ANKA"};
-    String prevArr[];
 
     CustomListView clv;
 
@@ -39,10 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         clv = (CustomListView) findViewById(R.id.customListView);
 
-        clv.populate(tempArr);
-        prevArr = tempArr;
-
         is.addTextChangedListener(new TextWatcher() {
+            long id = 0;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -50,17 +44,26 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String text = charSequence.toString();
 
-                if (prevArr[0].contains("kalle")) prevArr = tempArr2;
-                else prevArr = tempArr;
-
-                // Use this function to populate with new data
-                clv.populate(prevArr);
-
-                if(charSequence.length() != 0)
-                    new SearchOperation().execute("http://flask-afteach.rhcloud.com/getnames/4/" + charSequence);
-
+                if(charSequence.length() != 0) {
+                    id++;
+                    new SearchOperation(new SearchOperationInterface() {
+                        @Override
+                        public void putResults(JSONObject jsonObject) {
+                            if (jsonObject != null) {
+                                try {
+                                    long tempId = jsonObject.getInt("id");
+                                    JSONArray result = jsonObject.getJSONArray("result");
+                                    String[] resultingArray = result.join(",").replaceAll("\"", "").split(",");
+                                    if(tempId == id)
+                                        clv.populate(resultingArray);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }).execute("http://flask-afteach.rhcloud.com/getnames/"+ id + "/" + charSequence);
+                }
             }
 
             @Override

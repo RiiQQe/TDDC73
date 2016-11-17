@@ -26,9 +26,9 @@ public class CustomListView extends View {
 
     GestureDetector mDetector;
 
-    int nrOfResults;
+    String[] mData = {};
 
-    String[] mData;
+    int nrOfResults;
 
     public CustomListView(Context context, AttributeSet attrs) {
         super(context, attrs);
