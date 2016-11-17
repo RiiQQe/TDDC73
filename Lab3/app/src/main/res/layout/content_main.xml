@@ -23,7 +23,7 @@
         android:id="@+id/customListView"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:showText="true"
+        app:nrOfResults="10"
         android:layout_below="@+id/interactiveSearcher"
         />
 

@@ -4,6 +4,6 @@
             <attr name="hint" format="string" />
         </declare-styleable>
         <declare-styleable name="CustomListView">
-            <attr name="showText" format="boolean" />
+            <attr name="nrOfResults" format="integer" />
         </declare-styleable>
 </resources>
