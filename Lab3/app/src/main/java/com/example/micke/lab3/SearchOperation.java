@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,13 +37,12 @@ public class SearchOperation extends AsyncTask<String, Void, String> {
             urlConnection = (HttpURLConnection) url.openConnection();
             in = new BufferedInputStream(urlConnection.getInputStream());
 
-            //JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-
             while((bytesRead = in.read(contents)) != -1) {
                 strFileContents += new String(contents, 0, bytesRead);
             }
 
             in.close();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -56,7 +58,18 @@ public class SearchOperation extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        Log.d("TAG", "Response: " + result);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(result);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Log.d("TAG", "JSONObj: " + jsonObject.get("result"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         //Possible to use UI components here, populate the list view here
     }
 
