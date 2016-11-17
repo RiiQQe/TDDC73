@@ -7,11 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         InteractiveSearcher interactiveSearcher = (InteractiveSearcher) findViewById(R.id.interactiveSearcher);
+
+        new SearchOperation().execute("http://flask-afteach.rhcloud.com/getnames/4/Emm");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                if(charSequence.length() != 0)
+                    new SearchOperation().execute("http://flask-afteach.rhcloud.com/getnames/4/" + charSequence);
             }
 
             @Override
@@ -51,10 +60,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*private InputStream openHttpConnection(String urlStr{
-        InputStream in = null;
-        int resCode = -1;
-        return;
+    /*private void openConnection(final String urlStr) {
+
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    URL url = new URL(urlStr);
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    readStream(in);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+    }*/
+
+    /*private void readStream(InputStream in) {
+
+        byte[] contents = new byte[1024];
+
+        int bytesRead = 0;
+        String strFileContents = "";
+        try {
+            while((bytesRead = in.read(contents)) != -1) {
+                strFileContents += new String(contents, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("TAG", "Answer: " + strFileContents);
     }*/
 
     @Override
