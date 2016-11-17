@@ -4,7 +4,6 @@ package com.example.micke.lab3;
 import android.os.Bundle;
 
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +18,7 @@ import android.widget.EditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         clv = (CustomListView) findViewById(R.id.customListView);
 
         is.addTextChangedListener(new TextWatcher() {
+            long id = 0;
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -44,20 +45,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(charSequence.length() != 0)
+                if(charSequence.length() != 0) {
+                    id++;
                     new SearchOperation(new SearchOperationInterface() {
                         @Override
-                        public void putResults(JSONArray result) {
-                            if(result != null) {
+                        public void putResults(JSONObject jsonObject) {
+                            if (jsonObject != null) {
                                 try {
+                                    long tempId = jsonObject.getInt("id");
+                                    JSONArray result = jsonObject.getJSONArray("result");
                                     String[] resultingArray = result.join(",").replaceAll("\"", "").split(",");
-                                    clv.populate(resultingArray);
+                                    if(tempId == id)
+                                        clv.populate(resultingArray);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }
-                    }).execute("http://flask-afteach.rhcloud.com/getnames/4/" + charSequence);
+                    }).execute("http://flask-afteach.rhcloud.com/getnames/"+ id + "/" + charSequence);
+                }
             }
 
             @Override

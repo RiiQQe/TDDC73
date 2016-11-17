@@ -71,12 +71,10 @@ public class SearchOperation extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         }
 
-        if (mListener != null)
-            try {
-                mListener.putResults(jsonObject.getJSONArray("result"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        if (mListener != null) {
+            //Log.d("TAG", String.valueOf(jsonObject));
+            mListener.putResults(jsonObject);
+        }
     }
 
     @Override
