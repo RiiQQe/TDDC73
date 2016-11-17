@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     String[] tempArr = {"kalle", "kaka", "kul", "a", "b", "c", "d", "e", "f", "g", "h", "i", "a", "b", "c", "d", "e", "f", "g", "h", "i"};
     String[] tempArr2 = {"NYA STRANGAR", "KALLE ANKA"};
     String prevArr[];
-    
+
     CustomListView clv;
 
     @Override
