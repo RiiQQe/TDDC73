@@ -2,14 +2,18 @@ package com.example.micke.lab3;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 /**
  * Created by micke on 2016-11-10.
  */
 
-public class InteractiveSearcher extends EditText{
+public class InteractiveSearcher extends EditText {
     private String hint;
 
     public InteractiveSearcher(Context context) {
@@ -30,5 +34,4 @@ public class InteractiveSearcher extends EditText{
     private void setInteractiveSearcher() {
 
     }
-
 }

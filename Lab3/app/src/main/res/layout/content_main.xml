@@ -19,4 +19,12 @@
         android:layout_height="wrap_content"
         android:hint="Sök för fan"/>
 
+    <com.example.micke.lab3.CustomListView
+        android:id="@+id/customListView"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:showText="true"
+        android:layout_below="@+id/interactiveSearcher"
+        />
+
 </RelativeLayout>

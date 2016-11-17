@@ -21,6 +21,12 @@ import java.net.URL;
 
 public class SearchOperation extends AsyncTask<String, Void, String> {
 
+    private SearchOperationInterface mListener;
+
+    public SearchOperation(SearchOperationInterface mListener) {
+        this.mListener  = mListener;
+    }
+
     @Override
     protected String doInBackground(String... params) {
 
@@ -40,7 +46,6 @@ public class SearchOperation extends AsyncTask<String, Void, String> {
             while((bytesRead = in.read(contents)) != -1) {
                 strFileContents += new String(contents, 0, bytesRead);
             }
-
             in.close();
 
         } catch (MalformedURLException e) {
@@ -57,20 +62,21 @@ public class SearchOperation extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-
+        super.onPostExecute(result);
         JSONObject jsonObject = null;
+
         try {
             jsonObject = new JSONObject(result);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        try {
-            Log.d("TAG", "JSONObj: " + jsonObject.get("result"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        //Possible to use UI components here, populate the list view here
+        if (mListener != null)
+            try {
+                mListener.putResults(jsonObject.getJSONArray("result"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
     }
 
     @Override
