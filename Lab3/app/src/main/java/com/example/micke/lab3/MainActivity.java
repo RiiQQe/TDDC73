@@ -13,7 +13,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         InteractiveSearcher is = (InteractiveSearcher) findViewById(R.id.interactiveSearcher);
+
 
         clv = (CustomListView) findViewById(R.id.customListView);
 
@@ -49,7 +55,12 @@ public class MainActivity extends AppCompatActivity {
                 if (prevArr[0].contains("kalle")) prevArr = tempArr2;
                 else prevArr = tempArr;
 
+                // Use this function to populate with new data
                 clv.populate(prevArr);
+
+                if(charSequence.length() != 0)
+                    new SearchOperation().execute("http://flask-afteach.rhcloud.com/getnames/4/" + charSequence);
+
             }
 
             @Override
@@ -59,13 +70,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
-    /*private InputStream openHttpConnection(String urlStr{
-        InputStream in = null;
-        int resCode = -1;
-        return;
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
