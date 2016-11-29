@@ -14,7 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+
     <com.example.michael.tddc73project.SignUpForm
+        android:id="@+id/SignUpForm"
         android:layout_height="20dp"
         android:layout_width="match_parent" />
 </RelativeLayout>
