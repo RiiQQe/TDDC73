@@ -10,14 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.michael.tddc73project.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
     <com.example.michael.tddc73project.SignUpForm
         android:id="@+id/SignUpForm"
-        android:layout_height="20dp"
-        android:layout_width="match_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.example.michael.tddc73project.SignUpForm>
+
+    <!--<com.example.michael.tddc73project.PasswordStrength
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.example.michael.tddc73project.PasswordStrength>-->
 
 </RelativeLayout>
