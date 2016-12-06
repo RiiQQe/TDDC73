@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     SignUpForm signUpForm;
 
-    Map<String, String> formMap = new HashMap<String, String>();
+    Map<EditText, Boolean> formMap = new HashMap<EditText, Boolean>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         signUpForm.setOnSave(new SignUpForm.OnSaveListener() {
             @Override
-            public void onSave(Map<String, String> formVals) {
-                // Do stuff on save
-                formMap.putAll(formVals);
+            public void onSave(ArrayList<String> formVals) {
+
+                for(int i = 0; i < formVals.size(); i++) {
+                    Log.i("kalle", formVals.get(i));
+                }
             }
         });
     }
