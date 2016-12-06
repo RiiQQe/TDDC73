@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">TDDC73Project</string>
-    <string name="password_txt_field">Password required</string>
+    <string name="password_txt_field">Password</string>
 </resources>

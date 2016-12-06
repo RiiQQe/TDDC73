@@ -94,6 +94,16 @@ public class PasswordStrength extends LinearLayout{
 
             }
         });
+    }
 
+    public EditText getPasswordField(){
+        return passwordField;
+    }
+
+    public void addPasswordFieldText(String req) {
+        if (passwordField != null) {
+            String newHint = passwordField.getHint().toString() + req;
+            passwordField.setHint(newHint);
+        }
     }
 }

@@ -121,7 +121,12 @@ public class SignUpForm extends LinearLayout {
 
         //PasswordStrength ps = (PasswordStrength) findViewById(R.id.passwordStrength);
 
+        //TODO: ADD THIS TO THE ARRAYLIST
+        EditText passwordField = ps.getPasswordField();
+
         String req = compulsory ? required : "";
+
+        ps.addPasswordFieldText(req);
 
         //password.setHint("Password" + req);
         //password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
