@@ -19,6 +19,8 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withChild;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
@@ -47,7 +49,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void testPasswordComponent() {
+    public void passwordStrengthComponent() {
         //Test that it says weak with 'Test'
         onView(withId(R.id.PasswordTxtField))
                 .perform(replaceText(weakMessage));
@@ -77,5 +79,23 @@ public class ExampleInstrumentedTest {
 
         onView(withId(R.id.PasswordStrengthTxt))
                 .check(matches(withText("Strong")));
+    }
+
+    @Test
+    public void signUpFormComponent() {
+        // Check if there is a EditText with the hint 'Full name'
+        // The use of multiple withChild is because SignUpForm is built up like this tree
+        // SignUpForm
+        //     |
+        //   mainrl
+        //     |
+        //   mainll
+        //     |
+        //   ll1
+        //     |
+        //   fullNameField
+
+        onView(withId(R.id.SignUpForm))
+                .check(matches(withChild(withChild(withChild(withChild(withHint("Full name")))))));
     }
 }
