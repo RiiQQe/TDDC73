@@ -92,6 +92,8 @@ public class SignUpForm extends LinearLayout {
 
         String req = compulsory ? required : "";
 
+        ps.addPasswordFieldText(req);
+
         //password.setHint("Password" + req);
         //password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 

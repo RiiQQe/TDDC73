@@ -37,10 +37,6 @@ public class PasswordStrength extends LinearLayout{
         init(context);
     }
 
-    public EditText getPasswordField(){
-        return passwordField;
-    }
-
     private void init(Context context) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.password_field, this);
@@ -98,6 +94,16 @@ public class PasswordStrength extends LinearLayout{
 
             }
         });
+    }
 
+    public EditText getPasswordField(){
+        return passwordField;
+    }
+
+    public void addPasswordFieldText(String req) {
+        if (passwordField != null) {
+            String newHint = passwordField.getHint().toString() + req;
+            passwordField.setHint(newHint);
+        }
     }
 }

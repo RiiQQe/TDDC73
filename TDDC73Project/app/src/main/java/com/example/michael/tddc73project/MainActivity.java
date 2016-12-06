@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         signUpForm.addGender(true);
         signUpForm.addPasswordField(true);
 
-
-
         signUpForm.setOnSave(new SignUpForm.OnSaveListener() {
             @Override
             public void onSave(Map<String, String> formVals) {
