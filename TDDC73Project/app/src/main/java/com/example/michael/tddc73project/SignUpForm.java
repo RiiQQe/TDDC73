@@ -2,7 +2,9 @@ package com.example.michael.tddc73project;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +31,7 @@ public class SignUpForm extends LinearLayout {
 
     private Button save;
     private EditText fullNameField, emailField;
+    private HashMap<EditText, Boolean> map;
 
     private OnSaveListener onSaveListener;
     public interface OnSaveListener{
@@ -47,9 +50,21 @@ public class SignUpForm extends LinearLayout {
 
                 formVals.put("kalle2", fullNameField.getText().toString());
 
+                checkAllFields();
+
                 onSaveListener.onSave(formVals);
             }
         });
+    }
+
+    private void checkAllFields() {
+
+        for(Map.Entry<EditText, Boolean> entry : map.entrySet()) {
+
+            checkFieldColor(entry.getKey(), entry.getValue());
+
+        }
+
     }
 
     public SignUpForm(Context ctx) {
@@ -66,10 +81,28 @@ public class SignUpForm extends LinearLayout {
         init();
     }
 
-    public void addNameField(boolean compulsory) {
+    public void addNameField(final boolean compulsory) {
         LinearLayout ll1 = new LinearLayout(getContext());
         ll1.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT));
         fullNameField = new EditText(getContext());
+
+        fullNameField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() != 0 && compulsory == true)
+                    fullNameField.setBackground(getResources().getDrawable(R.color.white));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         String req = compulsory ? required : "";
 
@@ -78,6 +111,7 @@ public class SignUpForm extends LinearLayout {
 
         ll1.addView(fullNameField);
         mainll.addView(ll1);
+        map.put(fullNameField, compulsory);
     }
 
     public void addPasswordField(boolean compulsory) {
@@ -100,6 +134,8 @@ public class SignUpForm extends LinearLayout {
         mainll.setId(View.generateViewId());
         mainll.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT));
         mainll.setOrientation(LinearLayout.VERTICAL);
+
+        map = new HashMap<>();
 
         RelativeLayout mainrl = new RelativeLayout(getContext());
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
@@ -124,15 +160,34 @@ public class SignUpForm extends LinearLayout {
         mainll.addView(editText);
     }
 
-    public void addEmailField(boolean compulsory) {
-        EditText emailField = new EditText(getContext());
+    public void addEmailField(final boolean compulsory) {
+        final EditText emailField = new EditText(getContext());
         emailField.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+        emailField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() != 0 && compulsory == true)
+                    emailField.setBackground(getResources().getDrawable(R.color.white));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         String req = compulsory ? required : "";
 
         emailField.setHint("Email" + req);
 
         mainll.addView(emailField);
+        map.put(emailField, compulsory);
     }
 
 
@@ -167,5 +222,12 @@ public class SignUpForm extends LinearLayout {
         ll.addView(genderRadio);
 
         mainll.addView(ll);
+    }
+
+    public void checkFieldColor(EditText et, Boolean bool) {
+
+        if(et.getText().length() == 0 && bool == true)
+            et.setBackground(getResources().getDrawable(R.color.progressWeak));
+
     }
 }
