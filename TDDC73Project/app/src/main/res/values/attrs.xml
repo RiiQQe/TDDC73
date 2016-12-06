@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="SignUpForm">
         <attr name="hint" format="string" />
+        <attr name="password" format="boolean" />
     </declare-styleable>
 </resources>

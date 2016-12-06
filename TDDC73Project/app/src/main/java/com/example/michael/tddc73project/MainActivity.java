@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
         signUpForm = (SignUpForm) findViewById(R.id.SignUpForm);
 
-        signUpForm.addEditableText("Extra TextField");
+        signUpForm.addNameField(false);
+        signUpForm.addEmailField(true);
+        signUpForm.addGender(true);
+        signUpForm.addPasswordField(true);
     }
 }
