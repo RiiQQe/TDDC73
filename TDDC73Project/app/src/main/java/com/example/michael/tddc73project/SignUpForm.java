@@ -216,7 +216,7 @@ public class SignUpForm extends LinearLayout {
         gender.setTextSize(20);
 
         gender.setPadding(0,15,0,0);
-        
+
         String req = compulsory ? required : "";
         gender.setText("Gender:" + req);
 
@@ -246,12 +246,22 @@ public class SignUpForm extends LinearLayout {
 
     public boolean checkFieldColor(EditText et, Boolean bool) {
 
-        if(et.getText().length() == 0 && bool == true) {
+        if(et.getHint().toString().contains("Email") && bool && validateEmail(et)) {
+            et.setBackground(getResources().getDrawable(R.color.progressWeak));
+            return false;
+
+        }
+        else if(et.getText().length() == 0 && bool == true) {
             et.setBackground(getResources().getDrawable(R.color.progressWeak));
             return false;
         } else
             return true;
 
 
+    }
+
+    private boolean validateEmail(EditText et) {
+
+        return (et.getText().length() == 0 || !et.getText().toString().contains("@"));
     }
 }
