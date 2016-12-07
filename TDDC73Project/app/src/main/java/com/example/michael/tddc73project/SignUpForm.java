@@ -35,9 +35,6 @@ public class SignUpForm extends LinearLayout {
     private EditText fullNameField, emailField;
     private HashMap<EditText, Boolean> map;
 
-    private int hintColor;
-    private int textColor;
-    private int backgroundColor;
     private Drawable originalDrawable;
 
     private OnSaveListener onSaveListener;
@@ -238,7 +235,6 @@ public class SignUpForm extends LinearLayout {
     public void checkFieldColor(EditText et, Boolean bool) {
 
         if(et.getText().length() == 0 && bool == true)
-            et.setBackground(getResources().getDrawable(R.color.progressWeak));
-
+            et.setBackgroundColor(Color.RED);
     }
 }
