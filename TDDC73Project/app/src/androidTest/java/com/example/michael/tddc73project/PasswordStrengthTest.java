@@ -17,7 +17,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class PasswordStrengthTest {
     private static final String weakMessage = "Test";
     private static final String fairMessage = "Test1";
-    private static final String strongMessage = "TestTest1";
+    public static final String strongMessage = "TestTest1";
 
     @Rule
     public ActivityTestRule<MainActivity> menuActivityTestRule =
@@ -55,5 +55,4 @@ public class PasswordStrengthTest {
         onView(withId(R.id.PasswordStrengthTxt))
                 .check(matches(withText("Strong")));
     }
-
 }

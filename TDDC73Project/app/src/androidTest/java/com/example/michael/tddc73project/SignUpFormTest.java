@@ -7,6 +7,7 @@ import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 import android.view.View;
 
 import org.hamcrest.Matcher;
@@ -14,8 +15,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -23,6 +29,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
 /**
@@ -32,6 +41,11 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class SignUpFormTest {
+
+    PasswordStrengthTest constants = new PasswordStrengthTest();
+
+    private String myFullName = "My Full Name";
+    private String myEmail = "kalle@anka.se";
 
     @Rule
     public ActivityTestRule<MainActivity> menuActivityTestRule =
@@ -70,6 +84,33 @@ public class SignUpFormTest {
         // Check if there is a EditText with the hint 'Password *'
         onView(withId(R.id.PasswordTxtField))
                 .check(matches(withHint("Password *")));
+    }
+
+    @Test
+    public void fullTestOfFlow() {
+        // Better way of matching our EditText's without id's
+        // Change the value of the edittext with full name
+        onView(withHint("Full name")).perform(replaceText(myFullName));
+
+        // Change the value of the edittext with password
+        onView(withHint("Password *")).perform(replaceText(constants.strongMessage));
+
+        // Change the value of the edittext with email
+        onView(withHint("Email *")).perform(replaceText(myEmail));
+
+        // Change the gender radiobutton from default Male to Other
+        onView(withText("Other")).perform(click());
+
+        // Click the save button
+        onView(withText("save")).perform(click());
+
+        // Get the new values from MainActivity.java
+        ArrayList<String> formVals = menuActivityTestRule.getActivity().formValues;
+
+        assertEquals(formVals.get(0), "Other");
+        assertEquals(formVals.get(1), myFullName);
+        assertEquals(formVals.get(2), constants.strongMessage);
+        assertEquals(formVals.get(3), myEmail);
 
     }
 }
