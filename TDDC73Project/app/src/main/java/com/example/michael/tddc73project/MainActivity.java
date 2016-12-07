@@ -13,7 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
     SignUpForm signUpForm;
 
-    Map<EditText, Boolean> formMap = new HashMap<EditText, Boolean>();
+    public ArrayList<String> formValues = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +31,7 @@ public class MainActivity extends AppCompatActivity {
         signUpForm.setOnSave(new SignUpForm.OnSaveListener() {
             @Override
             public void onSave(ArrayList<String> formVals) {
-
-                for(int i = 0; i < formVals.size(); i++) {
-                    Log.i("kalle", formVals.get(i));
-                }
+                formValues.addAll(formVals);
             }
         });
     }
