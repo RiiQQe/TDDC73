@@ -215,6 +215,8 @@ public class SignUpForm extends LinearLayout {
         TextView gender = new TextView(getContext());
         gender.setTextSize(20);
 
+        gender.setPadding(0,15,0,0);
+        
         String req = compulsory ? required : "";
         gender.setText("Gender:" + req);
 
