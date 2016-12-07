@@ -246,7 +246,7 @@ public class SignUpForm extends LinearLayout {
 
     public boolean checkFieldColor(EditText et, Boolean bool) {
 
-        if(et.getHint().toString().contains("Email") && bool && validateEmail(et)) {
+        if(et.getHint().toString().contains("Email") && bool && !isValidEmail(et.getText().toString())) {
             et.setBackground(getResources().getDrawable(R.color.progressWeak));
             return false;
 
@@ -260,8 +260,11 @@ public class SignUpForm extends LinearLayout {
 
     }
 
-    private boolean validateEmail(EditText et) {
-
-        return (et.getText().length() == 0 || !et.getText().toString().contains("@"));
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
     }
 }
