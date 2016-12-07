@@ -18,12 +18,9 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * Created by michael on 2016-11-29.
- */
 
 public class SignUpForm extends LinearLayout {
 
@@ -34,12 +31,16 @@ public class SignUpForm extends LinearLayout {
     private Button save;
     private EditText fullNameField, emailField;
     private HashMap<EditText, Boolean> map;
+    private ArrayList<String> formValues = new ArrayList<String>();
+
+    private RadioGroup genderRadio;
+    private RadioButton male, female, other;
 
     private Drawable originalDrawable;
 
     private OnSaveListener onSaveListener;
     public interface OnSaveListener{
-        public void onSave(Map<String, String> formVals);
+        public void onSave(ArrayList<String> formVals);
     }
 
     // Set a listener for our interface
@@ -49,25 +50,29 @@ public class SignUpForm extends LinearLayout {
         save.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, String> formVals = new HashMap<String, String>();
-                formVals.put("kalle", "test");
-
-                formVals.put("kalle2", fullNameField.getText().toString());
-
-                checkAllFields();
-
-                onSaveListener.onSave(formVals);
+                if (checkAllFields()) onSaveListener.onSave(formValues);
             }
         });
     }
 
-    private void checkAllFields() {
+    private boolean checkAllFields() {
+        formValues.clear();
 
-        for(Map.Entry<EditText, Boolean> entry : map.entrySet()) {
-
-            checkFieldColor(entry.getKey(), entry.getValue());
-
+        if (genderRadio != null) {
+            RadioButton gender = (RadioButton) findViewById(genderRadio.getCheckedRadioButtonId());
+            formValues.add(gender.getText().toString());
         }
+
+
+
+
+        boolean shouldPassToActivity = true;
+        for(Map.Entry<EditText, Boolean> entry : map.entrySet()) {
+            if (!checkFieldColor(entry.getKey(), entry.getValue())) shouldPassToActivity = false;
+            if (shouldPassToActivity) formValues.add(entry.getKey().getText().toString());
+        }
+
+        return shouldPassToActivity;
 
     }
 
@@ -200,31 +205,35 @@ public class SignUpForm extends LinearLayout {
 
 
     public void addGender(boolean compulsory) {
-        RadioGroup genderRadio = new RadioGroup(getContext());
-
+        genderRadio = new RadioGroup(getContext());
         LinearLayout ll = new LinearLayout(getContext());
         ll.setOrientation(LinearLayout.HORIZONTAL);
 
         TextView gender = new TextView(getContext());
         gender.setTextSize(20);
 
+        gender.setPadding(0,15,0,0);
+
         String req = compulsory ? required : "";
         gender.setText("Gender:" + req);
 
         genderRadio.setOrientation(RadioGroup.HORIZONTAL);
 
-        RadioButton male = new RadioButton(getContext());
+        male = new RadioButton(getContext());
         male.setText("Male");
+        male.setId(View.generateViewId());
 
-        RadioButton female = new RadioButton(getContext());
+        female = new RadioButton(getContext());
         female.setText("Female");
 
-        RadioButton other = new RadioButton(getContext());
+        other = new RadioButton(getContext());
         other.setText("Other");
 
         genderRadio.addView(male);
         genderRadio.addView(female);
         genderRadio.addView(other);
+
+        genderRadio.check(male.getId());
 
         ll.addView(gender);
         ll.addView(genderRadio);
@@ -232,9 +241,27 @@ public class SignUpForm extends LinearLayout {
         mainll.addView(ll);
     }
 
-    public void checkFieldColor(EditText et, Boolean bool) {
+    public boolean checkFieldColor(EditText et, Boolean bool) {
 
-        if(et.getText().length() == 0 && bool == true)
+        if(et.getHint().toString().contains("Email") && bool && !isValidEmail(et.getText().toString())) {
+            et.setBackground(getResources().getDrawable(R.color.progressWeak));
+            return false;
+
+        }
+        else if(et.getText().length() == 0 && bool == true) {
             et.setBackgroundColor(Color.RED);
+            return false;
+        } else
+            return true;
+
+
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
     }
 }

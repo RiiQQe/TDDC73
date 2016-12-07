@@ -9,6 +9,7 @@ import android.support.test.espresso.action.TypeTextAction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +19,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -36,6 +41,9 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
+
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
 /**
@@ -44,10 +52,12 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
-    private static final String weakMessage = "Test";
-    private static final String fairMessage = "Test1";
-    private static final String strongMessage = "TestTest1";
+public class SignUpFormTest {
+
+    PasswordStrengthTest constants = new PasswordStrengthTest();
+
+    private String myFullName = "My Full Name";
+    private String myEmail = "kalle@anka.se";
 
     @Rule
     public ActivityTestRule<MainActivity> menuActivityTestRule =
@@ -61,41 +71,7 @@ public class ExampleInstrumentedTest {
         assertEquals("com.example.michael.tddc73project", appContext.getPackageName());
     }
 
-    @Test
-    public void passwordStrengthComponent() {
-        //Test that it says weak with 'Test'
-        onView(withId(R.id.PasswordTxtField))
-                .perform(replaceText(weakMessage));
 
-        onView(withId(R.id.PasswordTxtField))
-                .check(matches(withText(weakMessage)));
-
-        onView(withId(R.id.PasswordStrengthTxt))
-                .check(matches(withText("Weak")));
-
-        //Test that it says fair with 'Test1'
-        onView(withId(R.id.PasswordTxtField))
-                .perform(replaceText(fairMessage));
-
-        onView(withId(R.id.PasswordTxtField))
-                .check(matches(withText(fairMessage)));
-
-        onView(withId(R.id.PasswordStrengthTxt))
-                .check(matches(withText("Fair")));
-
-        //Test that it says strong with 'TestTest1'
-        onView(withId(R.id.PasswordTxtField))
-                .perform(replaceText(strongMessage));
-
-        onView(withId(R.id.PasswordTxtField))
-                .check(matches(withText(strongMessage)));
-
-        onView(withId(R.id.PasswordStrengthTxt))
-                .check(matches(withText("Strong")));
-
-        onView(withId(R.id.PasswordTxtField))
-                .perform(clearText());
-    }
 
     @Test
     public void signUpFormComponent() {
@@ -127,6 +103,42 @@ public class ExampleInstrumentedTest {
         onView(withHint(is("Password *"))).check(matches(ColorMatcher.withBackgroundColor(Color.RED)));
 
 
+
+        // Check that a radiobutton with the text 'Male' is rendered
+        // Similar tree as above
+        onView(withId(R.id.SignUpForm))
+                .check(matches(withChild(withChild(withChild(withChild(withChild(withText("Male"))))))));
+
+        // Check if there is a EditText with the hint 'Password *'
+        onView(withId(R.id.PasswordTxtField))
+                .check(matches(withHint("Password *")));
+    }
+
+    @Test
+    public void fullTestOfFlow() {
+        // Better way of matching our EditText's without id's
+        // Change the value of the edittext with full name
+        onView(withHint("Full name")).perform(replaceText(myFullName));
+
+        // Change the value of the edittext with password
+        onView(withHint("Password *")).perform(replaceText(constants.strongMessage));
+
+        // Change the value of the edittext with email
+        onView(withHint("Email *")).perform(replaceText(myEmail));
+
+        // Change the gender radiobutton from default Male to Other
+        onView(withText("Other")).perform(click());
+
+        // Click the save button
+        onView(withText("save")).perform(click());
+
+        // Get the new values from MainActivity.java
+        ArrayList<String> formVals = menuActivityTestRule.getActivity().formValues;
+
+        assertEquals(formVals.get(0), "Other");
+        assertEquals(formVals.get(1), myFullName);
+        assertEquals(formVals.get(2), myEmail);
+        assertEquals(formVals.get(3), constants.strongMessage);
 
 
     }
