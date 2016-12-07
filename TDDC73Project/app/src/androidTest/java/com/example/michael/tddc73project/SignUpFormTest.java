@@ -61,5 +61,15 @@ public class SignUpFormTest {
 
         onView(withId(R.id.SignUpForm))
                 .check(matches(withChild(withChild(withChild(withChild(withHint("Full name")))))));
+
+        // Check that a radiobutton with the text 'Male' is rendered
+        // Similar tree as above
+        onView(withId(R.id.SignUpForm))
+                .check(matches(withChild(withChild(withChild(withChild(withChild(withText("Male"))))))));
+
+        // Check if there is a EditText with the hint 'Password *'
+        onView(withId(R.id.PasswordTxtField))
+                .check(matches(withHint("Password *")));
+
     }
 }
