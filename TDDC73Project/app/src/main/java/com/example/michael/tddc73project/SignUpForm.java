@@ -24,9 +24,9 @@ import java.util.Map;
 
 public class SignUpForm extends LinearLayout {
 
-    LinearLayout mainll;
+    private LinearLayout mainll;
 
-    String required = " *";
+    private String required = " *";
 
     private Button save;
     private EditText fullNameField, emailField;
@@ -39,7 +39,8 @@ public class SignUpForm extends LinearLayout {
     private Drawable originalDrawable;
 
     private OnSaveListener onSaveListener;
-    public interface OnSaveListener{
+
+    public interface OnSaveListener {
         public void onSave(ArrayList<String> formVals);
     }
 
@@ -63,11 +64,8 @@ public class SignUpForm extends LinearLayout {
             formValues.add(gender.getText().toString());
         }
 
-
-
-
         boolean shouldPassToActivity = true;
-        for(Map.Entry<EditText, Boolean> entry : map.entrySet()) {
+        for (Map.Entry<EditText, Boolean> entry : map.entrySet()) {
             if (!checkFieldColor(entry.getKey(), entry.getValue())) shouldPassToActivity = false;
             if (shouldPassToActivity) formValues.add(entry.getKey().getText().toString());
         }
@@ -85,37 +83,38 @@ public class SignUpForm extends LinearLayout {
         super(ctx, attrs);
         init();
     }
+
     public SignUpForm(Context ctx, AttributeSet attrs, int defStyle) {
         super(ctx, attrs, defStyle);
         init();
     }
 
-    public void addNameField(final boolean compulsory) {
+    public void addNameField(boolean compulsory) {
         LinearLayout ll1 = new LinearLayout(getContext());
         ll1.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT));
         fullNameField = new EditText(getContext());
 
-        if(compulsory)
+        if (compulsory)
             addTextChangeListener(fullNameField);
 
         String req = compulsory ? required : "";
 
         fullNameField.setHint("Full name" + req);
-        fullNameField.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT));
+        fullNameField.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT));
 
         ll1.addView(fullNameField);
         mainll.addView(ll1);
         map.put(fullNameField, compulsory);
     }
 
-    public void addPasswordField( boolean compulsory) {
+    public void addPasswordField(boolean compulsory) {
         //TODO: CHANGE TO CUSTOM PASSWORD WITH STRENGTH
 
         PasswordStrength ps = new PasswordStrength(getContext());
 
         EditText passwordField = ps.getPasswordField();
 
-        if(compulsory)
+        if (compulsory)
             addTextChangeListener(passwordField);
 
         String req = compulsory ? required : "";
@@ -141,7 +140,7 @@ public class SignUpForm extends LinearLayout {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() != 0) {
+                if (charSequence.length() != 0) {
                     et.setBackgroundDrawable(orgDrawable);
                 }
             }
@@ -188,11 +187,11 @@ public class SignUpForm extends LinearLayout {
         mainll.addView(editText);
     }
 
-    public void addEmailField( boolean compulsory) {
+    public void addEmailField(boolean compulsory) {
         EditText emailField = new EditText(getContext());
         emailField.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
-        if(compulsory)
+        if (compulsory)
             addTextChangeListener(emailField);
 
         String req = compulsory ? required : "";
@@ -212,7 +211,7 @@ public class SignUpForm extends LinearLayout {
         TextView gender = new TextView(getContext());
         gender.setTextSize(20);
 
-        gender.setPadding(0,15,0,0);
+        gender.setPadding(0, 15, 0, 0);
 
         String req = compulsory ? required : "";
         gender.setText("Gender:" + req);
@@ -243,12 +242,11 @@ public class SignUpForm extends LinearLayout {
 
     public boolean checkFieldColor(EditText et, Boolean bool) {
 
-        if(et.getHint().toString().contains("Email") && bool && !isValidEmail(et.getText().toString())) {
+        if (et.getHint().toString().contains("Email") && bool && !isValidEmail(et.getText().toString())) {
             et.setBackground(getResources().getDrawable(R.color.progressWeak));
             return false;
 
-        }
-        else if(et.getText().length() == 0 && bool == true) {
+        } else if (et.getText().length() == 0 && bool == true) {
             et.setBackgroundColor(Color.RED);
             return false;
         } else

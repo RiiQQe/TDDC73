@@ -21,10 +21,9 @@ public class PasswordAlgorithm {
         //Control length
         if(password.length() > 8) {
             total++;
-            //Log.d("TAG", String.valueOf(total));
         }
 
-        //Control if password contains upper case
+        //Control if password contains upper case and digit
         for(int i = 0; i < password.length(); i++) {
             if(Character.isUpperCase(password.charAt(i))) {
                 containsUpperCase = true;

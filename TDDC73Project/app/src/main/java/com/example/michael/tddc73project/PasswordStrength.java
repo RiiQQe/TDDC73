@@ -1,6 +1,7 @@
 package com.example.michael.tddc73project;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -15,7 +16,7 @@ import android.widget.TextView;
  * Created by michael on 2016-12-05.
  */
 
-public class PasswordStrength extends LinearLayout{
+public class PasswordStrength extends LinearLayout {
 
     private PasswordAlgorithm passwordAlgorithm;
     private ProgressBar progressBar;
@@ -38,7 +39,7 @@ public class PasswordStrength extends LinearLayout{
     }
 
     private void init(Context context) {
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.password_field, this);
 
         passwordAlgorithm = new PasswordAlgorithm();
@@ -66,28 +67,20 @@ public class PasswordStrength extends LinearLayout{
 
                 progressBar.setProgress(result);
 
-                if(result == 1) {
-                    progressBar.getProgressDrawable().setColorFilter(
-                            getResources().getColor(R.color.progressWeak), android.graphics.PorterDuff.Mode.SRC_IN);
+                if (result == 1) {
+                    setProgressColor(R.color.progressWeak);
 
                     passwordStrengthTxt.setText("Weak");
-
-                }
-                else if(result == 2) {
-                    progressBar.getProgressDrawable().setColorFilter(
-                            getResources().getColor(R.color.progressFair), android.graphics.PorterDuff.Mode.SRC_IN);
+                } else if (result == 2) {
+                    setProgressColor(R.color.progressFair);
 
                     passwordStrengthTxt.setText("Fair");
-                }
-                else if(result == 3) {
-                    progressBar.getProgressDrawable().setColorFilter(
-                            getResources().getColor(R.color.progressStrong), android.graphics.PorterDuff.Mode.SRC_IN);
+                } else if (result == 3) {
+                    setProgressColor(R.color.progressStrong);
 
                     passwordStrengthTxt.setText("Strong");
-                }
-                else {
-                    progressBar.getProgressDrawable().setColorFilter(
-                            getResources().getColor(R.color.progressDefault), android.graphics.PorterDuff.Mode.SRC_IN);
+                } else {
+                    setProgressColor(R.color.progressDefault);
 
                     passwordStrengthTxt.setText("Too short");
                 }
@@ -96,7 +89,7 @@ public class PasswordStrength extends LinearLayout{
         });
     }
 
-    public EditText getPasswordField(){
+    public EditText getPasswordField() {
         return passwordField;
     }
 
@@ -105,5 +98,10 @@ public class PasswordStrength extends LinearLayout{
             String newHint = passwordField.getHint().toString() + req;
             passwordField.setHint(newHint);
         }
+    }
+
+    private void setProgressColor(int color) {
+        progressBar.getProgressDrawable().setColorFilter(
+                getResources().getColor(color), android.graphics.PorterDuff.Mode.SRC_IN);
     }
 }
