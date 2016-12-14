@@ -32,6 +32,10 @@ public class InteractiveSearcher extends EditText {
     }
 
     private void setInteractiveSearcher() {
+    }
 
+    public void setText(String text) {
+        EditText et = (EditText) findViewById(R.id.interactiveSearcher);
+        et.setText(text);
     }
 }

@@ -23,6 +23,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     CustomListView clv;
+    InteractiveSearcher is;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +32,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        InteractiveSearcher is = (InteractiveSearcher) findViewById(R.id.interactiveSearcher);
+        is = (InteractiveSearcher) findViewById(R.id.interactiveSearcher);
 
         clv = (CustomListView) findViewById(R.id.customListView);
+
+        clv.setOnPress(new CustomListView.OnPressOption() {
+            @Override
+            public void onPress(String s){
+                Log.i("kalle", "testing" + s);
+                is.setText(s);
+            }
+        });
 
         is.addTextChangedListener(new TextWatcher() {
             long id = 0;

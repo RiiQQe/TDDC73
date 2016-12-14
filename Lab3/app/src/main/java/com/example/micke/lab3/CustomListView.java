@@ -22,6 +22,18 @@ public class CustomListView extends View {
 
     List<Item> itemList = new ArrayList<Item>();
 
+    private OnPressOption onPressListener;
+    public interface OnPressOption{
+        public void onPress(String s);
+    }
+
+    // Set a listener for our interface
+    public void setOnPress(OnPressOption listener) {
+        onPressListener = listener;
+
+       //Do stuff
+    }
+
     int itemHeight = 100;
 
     GestureDetector mDetector;
@@ -112,6 +124,8 @@ public class CustomListView extends View {
             float max = itm.getYMax();
             if (min < yPos && yPos < max) {
                 Log.i("kalle2", "WORKING ? " + itm.s);
+                onPressListener.onPress(itm.s);
+
             }
         }
     }

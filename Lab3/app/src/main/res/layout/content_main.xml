@@ -17,7 +17,7 @@
         android:id="@+id/interactiveSearcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Sök för fan"/>
+        android:hint="Sök namn"/>
 
     <com.example.micke.lab3.CustomListView
         android:id="@+id/customListView"
