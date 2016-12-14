@@ -8,7 +8,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +52,7 @@ public class SignUpForm extends LinearLayout {
     private RadioButton male, female, other;
     private Drawable originalDrawable;
     private OnSaveListener onSaveListener;
+
 
     /**
      * Constructor if the form is enabled programmatically.
@@ -186,7 +186,7 @@ public class SignUpForm extends LinearLayout {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() != 0) {
+                if (charSequence.length() != 0) {
                     et.setBackgroundDrawable(orgDrawable);
                 }
             }
@@ -264,11 +264,12 @@ public class SignUpForm extends LinearLayout {
      * Public function to create a email field in the form
      * @param compulsory true if the field should be required
      */
-    public void addEmailField( boolean compulsory) {
+    public void addEmailField(boolean compulsory) {
+
         EditText emailField = new EditText(getContext());
         emailField.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
-        if(compulsory)
+        if (compulsory)
             addTextChangeListener(emailField);
 
         String req = compulsory ? required : "";
@@ -291,7 +292,7 @@ public class SignUpForm extends LinearLayout {
         TextView gender = new TextView(getContext());
         gender.setTextSize(20);
 
-        gender.setPadding(0,15,0,0);
+        gender.setPadding(0, 15, 0, 0);
 
         String req = compulsory ? required : "";
         gender.setText("Gender:" + req);
