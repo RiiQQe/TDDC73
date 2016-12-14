@@ -1,11 +1,9 @@
 package com.example.michael.tddc73project;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -13,31 +11,63 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
- * Created by michael on 2016-12-05.
+ * This consists of all the methods handling the password.
+ *
+ * @author Rickard Lindstedt
+ * @author Michael Sjöström
  */
 
 public class PasswordStrength extends LinearLayout {
 
+    /**
+     * Private variables for the PasswordStrength class.
+     */
     private PasswordAlgorithm passwordAlgorithm;
     private ProgressBar progressBar;
     private EditText passwordField;
     private TextView passwordStrengthTxt;
 
+    /**
+     * Constructor which only takes a context.
+     *
+     * @param context the activity context.
+     */
     public PasswordStrength(Context context) {
         super(context);
         init(context);
     }
 
+    /**
+     * Constructor which also takes attributes.
+     *
+     * @param context the activity context, sent as first variable.
+     * @param attrs   the attributes, sent as second variable.
+     */
     public PasswordStrength(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
+
+    /**
+     * Constructor which takes context, attributes and a style.
+     *
+     * @param context      the activity context, sent as first variable.
+     * @param attrs        the attributes, sent as second variable.
+     * @param defStyleAttr a style.
+     */
 
     public PasswordStrength(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
+    /**
+     * An init function which is called by each constructor. It initiates all variables that are
+     * shared among the other methods. It also ads a TextWatcher to the passwordField to be able to
+     * check the strength at each added or removed character.
+     *
+     * @param context the activity context.
+     */
     private void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.password_field, this);
@@ -89,19 +119,35 @@ public class PasswordStrength extends LinearLayout {
         });
     }
 
+    /**
+     * Sets the color of the progressbar.
+     *
+     * @param color the color of the progressbar.
+     */
+    private void setProgressColor(int color) {
+        progressBar.getProgressDrawable().setColorFilter(
+                getResources().getColor(color), android.graphics.PorterDuff.Mode.SRC_IN);
+    }
+
+    /**
+     * Getter which returns the passwordField EditText.
+     *
+     * @return the passwordField EditText.
+     */
     public EditText getPasswordField() {
         return passwordField;
     }
 
+    /**
+     * Adds the specified text as a hint. This is used to add a "*" if the passwordField is
+     * comulsory.
+     *
+     * @param req the text to be added to the hint.
+     */
     public void addPasswordFieldText(String req) {
         if (passwordField != null) {
             String newHint = passwordField.getHint().toString() + req;
             passwordField.setHint(newHint);
         }
-    }
-
-    private void setProgressColor(int color) {
-        progressBar.getProgressDrawable().setColorFilter(
-                getResources().getColor(color), android.graphics.PorterDuff.Mode.SRC_IN);
     }
 }
