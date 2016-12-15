@@ -75,30 +75,48 @@ public class ImageViewer extends Application {
             }
         });
         
-        Button scaleBtn = new Button();
-        scaleBtn.setText("sc");
-        scaleBtn.setOnAction(new EventHandler<ActionEvent>() {
+        Button scaleUpBtn = new Button();
+        scaleUpBtn.setText("+");
+        scaleUpBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO: DO STUFF LIKE ROTATE / SCALE
-                System.out.println("Scale image");
+                iv1.setScaleX(iv1.getScaleX() * 1.5);
+                iv1.setScaleY(iv1.getScaleY() * 1.5);
             }
         });
         
-        Button rotateBtn = new Button();
-        rotateBtn.setText("rt");
-        rotateBtn.setOnAction(new EventHandler<ActionEvent>() {
+        Button scaleDownBtn = new Button();
+        scaleDownBtn.setText("-");
+        scaleDownBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO: DO STUFF LIKE ROTATE / SCALE
-                System.out.println("Rotate image");
+                iv1.setScaleX(iv1.getScaleX() * 0.5);
+                iv1.setScaleY(iv1.getScaleY() * 0.5);
+            }
+        });
+        
+        Button rotateRightBtn = new Button();
+        rotateRightBtn.setText("+90");
+        rotateRightBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                iv1.setRotate(iv1.getRotate() + 90);
+            }
+        });
+        
+        Button rotateLeftBtn = new Button();
+        rotateLeftBtn.setText("-90");
+        rotateLeftBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                iv1.setRotate(iv1.getRotate() - 90);
             }
         });
         
         HBox btnGroup = new HBox();
         
         btnGroup.setSpacing(0); 
-        btnGroup.getChildren().addAll(prevBtn, scaleBtn, rotateBtn, nextBtn);
+        btnGroup.getChildren().addAll(prevBtn, scaleUpBtn, scaleDownBtn, rotateRightBtn, rotateLeftBtn, nextBtn);
         root.setAlignment(Pos.CENTER);
         
         root.add(iv1, 0, 0);
