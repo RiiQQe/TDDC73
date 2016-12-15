@@ -12,13 +12,9 @@
 
     <com.example.michael.tddc73project.SignUpForm
         android:id="@+id/SignUpForm"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <!--<com.example.michael.tddc73project.PasswordStrength
-            android:id="@+id/passwordStrength"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.example.michael.tddc73project.PasswordStrength>-->
     </com.example.michael.tddc73project.SignUpForm>
 
 

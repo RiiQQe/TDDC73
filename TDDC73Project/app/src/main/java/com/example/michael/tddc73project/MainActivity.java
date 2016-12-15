@@ -2,6 +2,7 @@ package com.example.michael.tddc73project;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -30,15 +31,22 @@ public class MainActivity extends AppCompatActivity {
 
         signUpForm = (SignUpForm) findViewById(R.id.SignUpForm);
 
-        signUpForm.addNameField(false);
-        signUpForm.addEmailField(true);
-        signUpForm.addGender(true);
-        signUpForm.addPasswordField(true);
+        ArrayList<String> arr = new ArrayList<>();
+        arr.add("Man");
+        arr.add("Woman");
+        arr.add("Other");
+
+        signUpForm.addTextField("Name", true);
+        signUpForm.addTextField("Email", true);
+        signUpForm.addRadioButtonField("Gender", true, arr);
+        signUpForm.addPasswordField("Password", true);
 
         signUpForm.setOnSave(new OnSaveListener() {
             @Override
             public void onSave(ArrayList<String> formVals) {
+                formValues.clear();
                 formValues.addAll(formVals);
+                Log.d("TAG", formValues.toString());
             }
         });
     }

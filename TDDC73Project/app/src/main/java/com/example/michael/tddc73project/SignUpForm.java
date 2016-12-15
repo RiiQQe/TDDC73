@@ -47,15 +47,13 @@ public class SignUpForm extends LinearLayout {
     private ArrayList<String> formValues = new ArrayList<String>();
     private String required = " *";
     private Button save;
-    private EditText fullNameField, emailField;
     private RadioGroup genderRadio;
-    private RadioButton male, female, other;
-    private Drawable originalDrawable;
     private OnSaveListener onSaveListener;
 
 
     /**
      * Constructor if the form is enabled programmatically.
+     *
      * @param ctx the curent context of the application
      */
     public SignUpForm(Context ctx) {
@@ -65,7 +63,8 @@ public class SignUpForm extends LinearLayout {
 
     /**
      * Constructor if the form is enabled using XML.
-     * @param ctx the curent context of the application
+     *
+     * @param ctx   the curent context of the application
      * @param attrs additional attributes
      */
     public SignUpForm(Context ctx, AttributeSet attrs) {
@@ -75,8 +74,9 @@ public class SignUpForm extends LinearLayout {
 
     /**
      * Constructor if the form has a defStyle defined
-     * @param ctx the current context of the application
-     * @param attrs additional attributes
+     *
+     * @param ctx      the current context of the application
+     * @param attrs    additional attributes
      * @param defStyle a default style to apply to the view
      */
     public SignUpForm(Context ctx, AttributeSet attrs, int defStyle) {
@@ -96,9 +96,6 @@ public class SignUpForm extends LinearLayout {
 
         map = new HashMap<>();
 
-        EditText temp = new EditText(getContext());
-        originalDrawable = temp.getBackground();
-
         RelativeLayout mainrl = new RelativeLayout(getContext());
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.WRAP_CONTENT);
@@ -117,6 +114,7 @@ public class SignUpForm extends LinearLayout {
 
     /**
      * This is a private function to validate all the required fields.
+     *
      * @return the boolean value if all the fields are validated.
      */
     private boolean checkAllFields() {
@@ -128,7 +126,7 @@ public class SignUpForm extends LinearLayout {
         }
 
         boolean shouldPassToActivity = true;
-        for(Map.Entry<EditText, Boolean> entry : map.entrySet()) {
+        for (Map.Entry<EditText, Boolean> entry : map.entrySet()) {
             if (!checkFieldColor(entry.getKey(), entry.getValue())) shouldPassToActivity = false;
             if (shouldPassToActivity) formValues.add(entry.getKey().getText().toString());
         }
@@ -139,18 +137,18 @@ public class SignUpForm extends LinearLayout {
     /**
      * Private function to validate the field that's passed in and also changes the color of the field
      * if there is an error.
-     * @param et the field that should be checked
+     *
+     * @param et   the field that should be checked
      * @param bool if the field is compulsory
      * @return if the field is OK or NOT
      */
     private boolean checkFieldColor(EditText et, Boolean bool) {
 
-        if(et.getHint().toString().contains("Email") && bool && !isValidEmail(et.getText().toString())) {
+        if (et.getHint().toString().contains("Email") && bool && !isValidEmail(et.getText().toString())) {
             et.setBackground(getResources().getDrawable(R.color.progressWeak));
             return false;
 
-        }
-        else if(et.getText().length() == 0 && bool == true) {
+        } else if (et.getText().length() == 0 && bool == true) {
             et.setBackgroundColor(Color.RED);
             return false;
         } else
@@ -159,6 +157,7 @@ public class SignUpForm extends LinearLayout {
 
     /**
      * Private function to validate a email
+     *
      * @param target email address to validate
      * @return if the email address is valid or not
      */
@@ -172,6 +171,7 @@ public class SignUpForm extends LinearLayout {
 
     /**
      * Private function to create listener for the inputfields in the form.
+     *
      * @param et the edittext that should add a textListener
      */
     private void addTextChangeListener(final EditText et) {
@@ -202,6 +202,7 @@ public class SignUpForm extends LinearLayout {
     /**
      * This is a public method to set a listener to the save button, the button that always
      * is created.
+     *
      * @param listener the interface that keeps the onSave function.
      */
     public void setOnSave(OnSaveListener listener) {
@@ -216,108 +217,97 @@ public class SignUpForm extends LinearLayout {
     }
 
     /**
-     * Public function to create a name field in the form
-     * @param compulsory true if the field should be required
+     * Method to add a new EditText. No limitation in how many a user can add.
+     *
+     * @param text       the text that is going to be used as a hint.
+     * @param compulsory if the field is required or not.
      */
-    public void addNameField(final boolean compulsory) {
-        LinearLayout ll1 = new LinearLayout(getContext());
-        ll1.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT));
-        fullNameField = new EditText(getContext());
+    public void addTextField(String text, boolean compulsory) {
+        EditText field = new EditText(getContext());
 
-        if(compulsory)
-            addTextChangeListener(fullNameField);
+        if (text.toLowerCase().contains("email"))
+            field.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+        if (compulsory)
+            addTextChangeListener(field);
 
         String req = compulsory ? required : "";
 
-        fullNameField.setHint("Full name" + req);
-        fullNameField.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT));
+        field.setHint(text + req);
 
-        ll1.addView(fullNameField);
-        mainll.addView(ll1);
-        map.put(fullNameField, compulsory);
+        mainll.addView(field);
+        map.put(field, compulsory);
     }
 
     /**
-     * Public function to create a password field in the form
-     * @param compulsory true if the field should be required
+     * Method to add radiobuttons.
+     *
+     * @param text        the text that to the left of the radiobuttons, e.g. "Gender".
+     * @param compulsory  boolean which decides if the field is compulsory or not.
+     * @param buttonTexts an array holding the texts that are to be displayed in front of the
+     *                    radio buttons, e.g. "Man", "Woman", "Other".
      */
-    public void addPasswordField( boolean compulsory) {
-        PasswordStrength ps = new PasswordStrength(getContext());
+    public void addRadioButtonField(String text, boolean compulsory, ArrayList<String> buttonTexts) {
+        genderRadio = new RadioGroup(getContext());
+        LinearLayout ll = new LinearLayout(getContext());
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView textView = new TextView(getContext());
+        textView.setTextSize(20);
+
+        textView.setPadding(0, 15, 0, 0);
+
+        String req = compulsory ? required : "";
+        textView.setText(text + req);
+
+        genderRadio.setOrientation(RadioGroup.HORIZONTAL);
+
+        for (int i = 0; i < buttonTexts.size(); i++) {
+            genderRadio.addView(new RadioButton(getContext()));
+            ((RadioButton) genderRadio.getChildAt(i)).setText(buttonTexts.get(i));
+        }
+        if (compulsory)
+            ((RadioButton) genderRadio.getChildAt(0)).setChecked(true);
+
+        ll.addView(textView);
+        ll.addView(genderRadio);
+
+        mainll.addView(ll);
+    }
+
+    /**
+     * Method to add a password field with the standard password algorithm.
+     *
+     * @param text       the text that should be used as a hint in the password field.
+     * @param compulsory boolean which decides if the field is compulsory or not.
+     */
+    public void addPasswordField(String text, boolean compulsory) {
+
+        addPasswordField(text, compulsory, PasswordAlgorithm.class);
+
+    }
+
+    /**
+     * Method to add a password field with a user generated password algorithm.
+     *
+     * @param text              the text that should be used as a hint in the password field.
+     * @param compulsory        boolean which decides if the field is compulsory or not.
+     * @param passwordAlgorithm the user generated algorithm sent as a Class.
+     */
+    public void addPasswordField(String text, boolean compulsory, Class passwordAlgorithm) {
+
+        PasswordStrength ps = new PasswordStrength(getContext(), passwordAlgorithm);
 
         EditText passwordField = ps.getPasswordField();
 
-        if(compulsory)
+        if (compulsory)
             addTextChangeListener(passwordField);
 
         String req = compulsory ? required : "";
 
         ps.addPasswordFieldText(req);
 
-        //password.setHint("Password" + req);
-        //password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
         mainll.addView(ps);
         map.put(passwordField, compulsory);
-    }
-
-    /**
-     * Public function to create a email field in the form
-     * @param compulsory true if the field should be required
-     */
-    public void addEmailField(boolean compulsory) {
-
-        EditText emailField = new EditText(getContext());
-        emailField.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-
-        if (compulsory)
-            addTextChangeListener(emailField);
-
-        String req = compulsory ? required : "";
-
-        emailField.setHint("Email" + req);
-
-        mainll.addView(emailField);
-        map.put(emailField, compulsory);
-    }
-
-    /**
-     * Public function to create a gender radiogroup in the form
-     * @param compulsory true if the field should be required
-     */
-    public void addGender(boolean compulsory) {
-        genderRadio = new RadioGroup(getContext());
-        LinearLayout ll = new LinearLayout(getContext());
-        ll.setOrientation(LinearLayout.HORIZONTAL);
-
-        TextView gender = new TextView(getContext());
-        gender.setTextSize(20);
-
-        gender.setPadding(0, 15, 0, 0);
-
-        String req = compulsory ? required : "";
-        gender.setText("Gender:" + req);
-
-        genderRadio.setOrientation(RadioGroup.HORIZONTAL);
-
-        male = new RadioButton(getContext());
-        male.setText("Male");
-        male.setId(View.generateViewId());
-
-        female = new RadioButton(getContext());
-        female.setText("Female");
-
-        other = new RadioButton(getContext());
-        other.setText("Other");
-
-        genderRadio.addView(male);
-        genderRadio.addView(female);
-        genderRadio.addView(other);
-
-        genderRadio.check(male.getId());
-
-        ll.addView(gender);
-        ll.addView(genderRadio);
-
-        mainll.addView(ll);
     }
 }

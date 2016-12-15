@@ -18,7 +18,7 @@ public class PasswordAlgorithm {
     }
 
     /**
-     * Checks so that the password is at least 8 charachters long,
+     * Checks so that the password is at least 8 characters long,
      * contains at least one digit and one uppercase letter.
      *
      * @param password the password to be meassured.

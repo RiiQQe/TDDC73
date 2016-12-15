@@ -3,12 +3,14 @@ package com.example.michael.tddc73project;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * This consists of all the methods handling the password.
@@ -22,10 +24,10 @@ public class PasswordStrength extends LinearLayout {
     /**
      * Private variables for the PasswordStrength class.
      */
-    private PasswordAlgorithm passwordAlgorithm;
     private ProgressBar progressBar;
     private EditText passwordField;
     private TextView passwordStrengthTxt;
+    private Object passwordAlgorithm = null;
 
     /**
      * Constructor which only takes a context.
@@ -40,11 +42,18 @@ public class PasswordStrength extends LinearLayout {
     /**
      * Constructor which also takes attributes.
      *
-     * @param context the activity context, sent as first variable.
-     * @param attrs   the attributes, sent as second variable.
+     * @param context   the activity context, sent as first variable.
+     * @param algorithm the attributes, sent as second variable.
      */
-    public PasswordStrength(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public PasswordStrength(Context context, Class algorithm) {
+        super(context);
+        try {
+            passwordAlgorithm = algorithm.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         init(context);
     }
 
@@ -52,27 +61,26 @@ public class PasswordStrength extends LinearLayout {
      * Constructor which takes context, attributes and a style.
      *
      * @param context      the activity context, sent as first variable.
-     * @param attrs        the attributes, sent as second variable.
+     * @param algorithm    the attributes, sent as second variable.
      * @param defStyleAttr a style.
      */
-
-    public PasswordStrength(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public PasswordStrength(Context context, Class algorithm, int defStyleAttr) {
+        super(context);
         init(context);
+
     }
 
     /**
      * An init function which is called by each constructor. It initiates all variables that are
      * shared among the other methods. It also ads a TextWatcher to the passwordField to be able to
-     * check the strength at each added or removed character.
+     * check the strength at each added or removed character. The password algorithm class is
+     * created dynamically.
      *
      * @param context the activity context.
      */
     private void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.password_field, this);
-
-        passwordAlgorithm = new PasswordAlgorithm();
 
         passwordField = (EditText) findViewById(R.id.PasswordTxtField);
         progressBar = (ProgressBar) findViewById(R.id.PasswordProgressBar);
@@ -93,7 +101,24 @@ public class PasswordStrength extends LinearLayout {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                int result = passwordAlgorithm.checkPassword(editable.toString());
+
+                Method method = null;
+                try {
+                    method = passwordAlgorithm.getClass().getDeclaredMethod("checkPassword", String.class);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
+
+                int result = 0;
+                try {
+                    result = (int) method.invoke(passwordAlgorithm, editable.toString());
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
 
                 progressBar.setProgress(result);
 
