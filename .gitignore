@@ -47,3 +47,5 @@ captures/
 *~ 
 *.swp 
 *.swo
+/ImageViewer/ImageViewer/nbproject/private/
+/ImageViewer/ImageViewer/dist/
