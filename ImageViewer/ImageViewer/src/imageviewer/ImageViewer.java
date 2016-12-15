@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 /**
  *
@@ -115,7 +113,7 @@ public class ImageViewer extends Application {
         
         HBox btnGroup = new HBox();
         
-        btnGroup.setSpacing(0); 
+        btnGroup.setSpacing(5); 
         btnGroup.getChildren().addAll(prevBtn, scaleUpBtn, scaleDownBtn, rotateRightBtn, rotateLeftBtn, nextBtn);
         root.setAlignment(Pos.CENTER);
         
