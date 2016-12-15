@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         arr.add("Other");
 
         signUpForm.addTextField("Name", true);
-        signUpForm.addTextField("Email", false);
+        signUpForm.addTextField("Email", true);
         signUpForm.addRadioButtonField("Gender", true, arr);
         signUpForm.addPasswordField("Password", true);
 

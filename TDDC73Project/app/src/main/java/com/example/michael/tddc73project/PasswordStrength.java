@@ -3,7 +3,6 @@ package com.example.michael.tddc73project;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,7 +24,6 @@ public class PasswordStrength extends LinearLayout {
     /**
      * Private variables for the PasswordStrength class.
      */
-    //private PasswordAlgorithm passwordAlgorithm;
     private ProgressBar progressBar;
     private EditText passwordField;
     private TextView passwordStrengthTxt;
@@ -66,7 +64,6 @@ public class PasswordStrength extends LinearLayout {
      * @param algorithm    the attributes, sent as second variable.
      * @param defStyleAttr a style.
      */
-
     public PasswordStrength(Context context, Class algorithm, int defStyleAttr) {
         super(context);
         init(context);
@@ -76,7 +73,8 @@ public class PasswordStrength extends LinearLayout {
     /**
      * An init function which is called by each constructor. It initiates all variables that are
      * shared among the other methods. It also ads a TextWatcher to the passwordField to be able to
-     * check the strength at each added or removed character.
+     * check the strength at each added or removed character. The password algorithm class is
+     * created dynamically.
      *
      * @param context the activity context.
      */

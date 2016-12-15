@@ -216,6 +216,12 @@ public class SignUpForm extends LinearLayout {
         });
     }
 
+    /**
+     * Method to add a new EditText. No limitation in how many a user can add.
+     *
+     * @param text       the text that is going to be used as a hint.
+     * @param compulsory if the field is required or not.
+     */
     public void addTextField(String text, boolean compulsory) {
         EditText field = new EditText(getContext());
 
@@ -233,6 +239,14 @@ public class SignUpForm extends LinearLayout {
         map.put(field, compulsory);
     }
 
+    /**
+     * Method to add radiobuttons.
+     *
+     * @param text        the text that to the left of the radiobuttons, e.g. "Gender".
+     * @param compulsory  boolean which decides if the field is compulsory or not.
+     * @param buttonTexts an array holding the texts that are to be displayed in front of the
+     *                    radio buttons, e.g. "Man", "Woman", "Other".
+     */
     public void addRadioButtonField(String text, boolean compulsory, ArrayList<String> buttonTexts) {
         genderRadio = new RadioGroup(getContext());
         LinearLayout ll = new LinearLayout(getContext());
@@ -261,12 +275,25 @@ public class SignUpForm extends LinearLayout {
         mainll.addView(ll);
     }
 
+    /**
+     * Method to add a password field with the standard password algorithm.
+     *
+     * @param text       the text that should be used as a hint in the password field.
+     * @param compulsory boolean which decides if the field is compulsory or not.
+     */
     public void addPasswordField(String text, boolean compulsory) {
 
         addPasswordField(text, compulsory, PasswordAlgorithm.class);
 
     }
 
+    /**
+     * Method to add a password field with a user generated password algorithm.
+     *
+     * @param text              the text that should be used as a hint in the password field.
+     * @param compulsory        boolean which decides if the field is compulsory or not.
+     * @param passwordAlgorithm the user generated algorithm sent as a Class.
+     */
     public void addPasswordField(String text, boolean compulsory, Class passwordAlgorithm) {
 
         PasswordStrength ps = new PasswordStrength(getContext(), passwordAlgorithm);
